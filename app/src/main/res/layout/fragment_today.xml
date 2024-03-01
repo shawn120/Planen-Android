@@ -14,14 +14,27 @@
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_ddl_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select the deadline"
+        android:focusable="false"
+        android:clickable="true"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_title_entry" />
 
     <Button
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test"
-        app:layout_constraintTop_toBottomOf="@id/et_title_entry"/>
+        android:text="Add"
+        app:layout_constraintTop_toBottomOf="@+id/et_ddl_pick"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_task_list"

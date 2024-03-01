@@ -13,20 +13,21 @@ class TodayViewModel : ViewModel() {
 
     private var _deadlineItems = MutableLiveData<MutableList<Deadline>?>(null)
     val deadlineItems: LiveData<MutableList<Deadline>?> = _deadlineItems
-    fun loadData(newDeadlineTitle: String){
-        if (!TextUtils.isEmpty(newDeadlineTitle)) {
+    fun loadData(newDeadlineTitle: String, deadlineDate: String){
+        if (!TextUtils.isEmpty(newDeadlineTitle) && !TextUtils.isEmpty(deadlineDate)) {
             val newDeadline = Deadline(
                 newDeadlineTitle,
-                "2024-03-07",
+                deadlineDate,
                 "2024-02-22"
             )
 
-            val currentList = _deadlineItems.value
+            var currentList = _deadlineItems.value
             if (currentList == null) {
-                _deadlineItems.value = mutableListOf(newDeadline)
+                currentList = mutableListOf(newDeadline)
             } else {
-                _deadlineItems.value?.add(newDeadline)
+                currentList.add(0, newDeadline)
             }
+            _deadlineItems.value = currentList
         }
 
     }

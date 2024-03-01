@@ -6,18 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.planmanager.DummyTodoList
 import com.example.planmanager.R
-import com.example.planmanager.ToDoItem
 import com.example.planmanager.TodoListAdapter
+import com.example.planmanager.TodoListViewModel
 import com.example.planmanager.databinding.FragmentTodayBinding
-import com.example.planmanager.ui.AddPlan.AddPlanFragment
 
 class TodayFragment : Fragment() {
 
@@ -27,30 +24,36 @@ class TodayFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: TodoListAdapter // 自定义的适配器
+    private val todoListViewModel: TodoListViewModel by viewModels()
+    private lateinit var todorecyclerView: RecyclerView
+    private lateinit var todoadapter: TodoListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //val todayViewModel =
-        //   ViewModelProvider(this).get(TodayViewModel::class.java)
 
         _binding = FragmentTodayBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        recyclerView = root.findViewById(R.id.rv_todo_list)
-        adapter = TodoListAdapter() // 初始化适配器
+        todorecyclerView = root.findViewById(R.id.rv_todo_list)
+        todoadapter = TodoListAdapter(listOf())
 
         val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = adapter
+        todorecyclerView.layoutManager = layoutManager
+        todorecyclerView.setHasFixedSize(true)
 
-        val todoList = DummyTodoList.getDummyTodoList()
-        adapter.toDos.addAll(todoList)
-        adapter.notifyDataSetChanged()
+        todorecyclerView.adapter = todoadapter
+        todorecyclerView.scrollToPosition(0)
+
+//        todoListViewModel.todoItems.observe(requireContext()) {
+//
+//            todoData -> todoadapter.updateTodoList(todoData)
+//
+//        }
+
+        todoadapter.notifyDataSetChanged()
 
         val buttonAddPlan: Button = root.findViewById(R.id.today_add_button)
         buttonAddPlan.setOnClickListener {

@@ -8,12 +8,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.cardview.widget.CardView
 
-class TodoListAdapter : RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder>(){
+class TodoListAdapter(
+    private val toDoItem: List<ToDoItem>) : RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder>(){
 
     val toDos: MutableList<ToDoItem> = mutableListOf()
 
     override fun getItemCount() = toDos.size
 
+    private var updatedTodoList = listOf<ToDoItem>()
+    fun updateTodoList(newForecastPeriods: List<ToDoItem>?){
+        notifyItemRangeRemoved(0,updatedTodoList.size)
+        updatedTodoList = newForecastPeriods ?: listOf()
+        notifyItemRangeInserted(0, updatedTodoList.size)
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

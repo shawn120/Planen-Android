@@ -11,12 +11,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
-import com.example.planmanager.ui.DeadlineViewModel
+import com.example.planmanager.ui.TaskViewModel
 import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter()
-    private val viewModel: DeadlineViewModel by viewModels()
+    private val viewModel: TaskViewModel by viewModels()
     private lateinit var deadlineListRV: RecyclerView
 
 
@@ -32,19 +32,20 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         deadlineListRV.adapter = adapter
 
         val etDateEntry = view.findViewById<EditText>(R.id.et_ddl_pick)
+
         addBtn.setOnClickListener {
             val newDeadline = addBoxET.text.toString()
             Log.d("LookAtHere", "button being hit, input is {$newDeadline}")
-            viewModel.loadData(newDeadline, etDateEntry.text.toString())
+            viewModel.loadDeadline(newDeadline, etDateEntry.text.toString())
             addBoxET.setText("")
             etDateEntry.setText("")
             deadlineListRV.scrollToPosition(0)
         }
 
-        viewModel.deadlineItems.observe(viewLifecycleOwner){ deadlineItems ->
-            Log.d("LookAtHere", "new deadlineItem: {$deadlineItems}")
-            if (deadlineItems != null) {
-                adapter.updateDeadlines(deadlineItems)
+        viewModel.taskItems.observe(viewLifecycleOwner){ taskItems ->
+            Log.d("LookAtHere", "new deadlineItem: {$taskItems}")
+            if (taskItems != null) {
+                adapter.updateTasks(taskItems)
             }
         }
 

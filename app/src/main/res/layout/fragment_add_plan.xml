@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90609F72"
+    android:orientation="vertical"
+    android:windowSoftInputMode="adjustResize"
+    tools:context="ui.AddPlan.AddPlanFragment">
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="#FFFFFF"
+
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/viewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#1A4011"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#134903"
+        app:tabTextColor="#90978F">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabTask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:text="@string/title_addTask" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="@string/title_addDeadline"
+            tools:layout_editor_absoluteX="155dp"
+            tools:layout_editor_absoluteY="8dp" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+    <ScrollView
+        android:id="@+id/task_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/taskBottomContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="32dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:rotationX="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
+
+
+            <EditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="0dp"
+                android:layout_height="71dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/edit_task"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <DatePicker
+                android:id="@+id/selectDate"
+                style="@android:style/Widget.DatePicker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTintMode="add"
+                android:datePickerMode="calendar"
+                android:headerBackground="#90D8AD"
+                android:visibility="visible"
+                android:yearListSelectorColor="#6DAAAAAA"
+                app:layout_constraintBottom_toBottomOf="@+id/task_buttonCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/textview_selectDate"
+                android:textColor="#0B0A0A"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/selectDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />
+
+            <Button
+                android:id="@+id/task_buttonCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="add"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_cancel"
+                android:textSize="27sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/task_buttonDone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectDate" />
+
+            <Button
+                android:id="@+id/task_buttonDone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="src_atop"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_done"
+                android:textColor="#FFFFFF"
+                android:textColorLink="#80FFFFFF"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/task_buttonCancel"
+                app:layout_constraintTop_toBottomOf="@+id/selectDate" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/deadline_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/viewPager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/deadlineBottomContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:rotationX="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            tools:visibility="gone">
+
+
+            <EditText
+                android:id="@+id/editTextDeadlineName"
+                android:layout_width="305dp"
+                android:layout_height="71dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/edit_task"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginBottom="148dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/deadline_buttonDone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDeadlineName">
+
+                <TextView
+                    android:id="@+id/textViewSelectDueDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="0dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/textview_dueDate"
+                    android:textColor="#0B0A0A"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/editTextDeadlineDueDate"
+                    android:layout_width="250dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="0dp"
+                    android:hint="@string/edit_dueDate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:layout_editor_absoluteY="110dp" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/deadline_buttonDone"
+                android:layout_width="308dp"
+                android:layout_height="75dp"
+                android:layout_marginTop="8dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="src_atop"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_done"
+                android:textColor="#FFFFFF"
+                android:textColorLink="#80FFFFFF"
+                android:textSize="34sp"
+                app:layout_constraintBottom_toTopOf="@+id/deadline_buttonCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+            <Button
+                android:id="@+id/deadline_buttonCancel"
+                android:layout_width="308dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="240dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="add"
+                android:text="@string/button_cancel"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deadline_buttonDone" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

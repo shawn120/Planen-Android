@@ -1,0 +1,91 @@
+package com.example.planmanager.ui.AddPlan
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ScrollView
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.ViewPager2
+import com.example.planmanager.R
+import com.example.planmanager.ToDoItem
+import com.example.planmanager.TodoListViewModel
+import com.google.android.material.tabs.TabLayout
+
+class AddPlanFragment : Fragment(R.layout.fragment_add_plan) {
+
+    private val todoviewModel: TodoListViewModel by viewModels()
+    private lateinit var tabLayout: TabLayout
+    private lateinit var viewPager: ViewPager2
+    private lateinit var taskBottomContent: ConstraintLayout
+    private lateinit var deadlineBottomContent: ConstraintLayout
+    private lateinit var taskScroll:ScrollView
+    private lateinit var deadlineScroll:ScrollView
+    private lateinit var cancelbtn: Button
+    private lateinit var donebtn: Button
+    private lateinit var taskname: EditText
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        tabLayout = view.findViewById(R.id.tabLayout)
+        viewPager = view.findViewById(R.id.viewPager)
+        taskBottomContent = view.findViewById(R.id.taskBottomContent)
+        deadlineBottomContent = view.findViewById(R.id.deadlineBottomContent)
+        taskScroll = view.findViewById(R.id.task_scroll)
+        deadlineScroll = view.findViewById(R.id.deadline_scroll)
+        cancelbtn = view.findViewById(R.id.task_buttonCancel)
+        donebtn = view.findViewById(R.id.task_buttonDone)
+        taskname = view.findViewById(R.id.editTextTaskName)
+
+
+        cancelbtn.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
+        donebtn.setOnClickListener {
+            val taskName = taskname.text.toString().trim()
+            if(taskName.isNotEmpty()){
+                val todoItem = ToDoItem(taskName)
+                todoviewModel.addTodoItem(todoItem)
+                taskname.text.clear()
+                requireActivity().supportFragmentManager.popBackStack()
+            } else{
+                Toast.makeText(requireContext(), "Please enter a task name", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.let {
+                    viewPager.currentItem = it.position
+                    updateBottomContentVisibility(it.position)
+                }
+            }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+    private fun updateBottomContentVisibility(position: Int) {
+        when (position) {
+            0 -> {
+                    taskScroll.visibility = View.VISIBLE
+                    taskBottomContent.visibility = View.VISIBLE
+                    deadlineScroll.visibility = View.GONE
+                    deadlineBottomContent.visibility = View.GONE
+            }
+            1 -> {
+                taskScroll.visibility = View.GONE
+                taskBottomContent.visibility = View.GONE
+                deadlineScroll.visibility = View.VISIBLE
+                deadlineBottomContent.visibility = View.VISIBLE
+            }
+        }
+    }
+}
+

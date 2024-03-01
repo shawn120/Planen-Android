@@ -3,6 +3,13 @@ package com.example.planmanager.ui.Today
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.planmanager.R
+import com.example.planmanager.TodoListAdapter
+import com.example.planmanager.TodoListViewModel
+import com.example.planmanager.databinding.FragmentTodayBinding
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -10,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.planmanager.R
 import com.example.planmanager.ui.TaskViewModel
 import java.util.Calendar
 
@@ -18,6 +24,9 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter()
     private val viewModel: TaskViewModel by viewModels()
     private lateinit var deadlineListRV: RecyclerView
+    private val todoListViewModel: TodoListViewModel by viewModels()
+    private lateinit var todorecyclerView: RecyclerView
+    private lateinit var todoadapter: TodoListAdapter
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -31,6 +40,35 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
         deadlineListRV.adapter = adapter
 
+// <<<<<<< Hsuan
+//         todorecyclerView = root.findViewById(R.id.rv_todo_list)
+//         todoadapter = TodoListAdapter(listOf())
+
+//         val layoutManager = LinearLayoutManager(requireContext())
+//         todorecyclerView.layoutManager = layoutManager
+//         todorecyclerView.setHasFixedSize(true)
+
+//         todorecyclerView.adapter = todoadapter
+//         todorecyclerView.scrollToPosition(0)
+
+// //        todoListViewModel.todoItems.observe(requireContext()) {
+// //
+// //            todoData -> todoadapter.updateTodoList(todoData)
+// //
+// //        }
+
+//         todoadapter.notifyDataSetChanged()
+
+//         val buttonAddPlan: Button = root.findViewById(R.id.today_add_button)
+//         buttonAddPlan.setOnClickListener {
+//             findNavController().navigate(R.id.navigate_to_add_plan)
+//         }
+//         return root
+//     }
+//     override fun onDestroyView() {
+//         super.onDestroyView()
+//         _binding = null
+// =======
         val etDateEntry = view.findViewById<EditText>(R.id.et_ddl_pick)
 
         addBtn.setOnClickListener {
@@ -70,5 +108,6 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             datePickerDialog.show()
         }
 
+// >>>>>>> shawn
     }
 }

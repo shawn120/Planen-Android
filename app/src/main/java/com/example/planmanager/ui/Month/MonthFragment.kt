@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.planmanager.R
 import com.example.planmanager.databinding.FragmentMonthBinding
 
 class MonthFragment : Fragment() {
@@ -31,6 +34,10 @@ class MonthFragment : Fragment() {
         val textView: TextView = binding.textMonth
         monthViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
+        }
+        val buttonAddPlan: Button = root.findViewById(R.id.month_add_button)
+        buttonAddPlan.setOnClickListener {
+            findNavController().navigate(R.id.navigate_to_add_plan)
         }
         return root
     }

@@ -8,24 +8,26 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.Deadline
+import com.example.planmanager.data.TaskItem
+import com.example.planmanager.util.TaskType
 
 class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
 
-    private var deadlines: MutableList<Deadline> = mutableListOf()
+    private var tasks: MutableList<TaskItem> = mutableListOf()
 
-    fun updateDeadlines(newdeadlines: MutableList<Deadline>) {
-        notifyItemRangeRemoved(0, deadlines.size)
-        deadlines = newdeadlines
-        notifyItemRangeInserted(0, deadlines.size)
+    fun updateTasks(newTasks: MutableList<TaskItem>) {
+        notifyItemRangeRemoved(0, tasks.size)
+        tasks = newTasks
+        notifyItemRangeInserted(0, tasks.size)
     }
 
-    fun deleteDeadline(position: Int): Deadline {
-        val deadline = deadlines.removeAt(position)
+    fun deleteDeadline(position: Int): TaskItem {
+        val deadline = tasks.removeAt(position)
         notifyItemRemoved(position)
         return deadline
     }
 
-    override fun getItemCount() = deadlines.size
+    override fun getItemCount() = tasks.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodayViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -34,7 +36,7 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: TodayViewHolder, position: Int) {
-        holder.bind(deadlines[position])
+        holder.bind(tasks[position])
     }
 
     class TodayViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -45,13 +47,16 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
         private val startDateTV: TextView = view.findViewById(R.id.tv_ddl_start_date)
         private var currentDeadline: Deadline? = null
 
-        fun bind(deadline: Deadline) {
-            currentDeadline = deadline
-            deadlineTV.text = deadline.title
-            deadlineDateTV.text = deadline.deadlineDate
-            deadlineProgressPB.progress = deadline.percentagePassed
-            deadlinePercentageTV.text = deadline.percentagePassed.toString()+"%"
-            startDateTV.text = deadline.startDate
+        fun bind(taskItem: TaskItem) {
+            if (taskItem.taskType == TaskType.DEADLINE) {
+                currentDeadline = taskItem.deadline
+                deadlineTV.text = taskItem.deadline?.title
+                deadlineDateTV.text = taskItem.deadline?.deadlineDate
+                deadlineProgressPB.progress = taskItem.deadline?.percentagePassed!!
+                deadlinePercentageTV.text = taskItem.deadline?.percentagePassed.toString()+"%"
+                startDateTV.text = taskItem.deadline?.startDate
+            }
+
         }
     }
 }

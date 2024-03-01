@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+<!-- <<<<<<< Hsuan -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -41,3 +42,45 @@
             app:layout_constraintVertical_bias="0.013" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+<!-- ======= -->
+    <EditText
+        android:id="@+id/et_title_entry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a deadline title"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/et_ddl_pick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Select the deadline"
+        android:focusable="false"
+        android:clickable="true"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_title_entry" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        app:layout_constraintTop_toBottomOf="@+id/et_ddl_pick"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_task_list"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_add" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- >>>>>>> shawn -->

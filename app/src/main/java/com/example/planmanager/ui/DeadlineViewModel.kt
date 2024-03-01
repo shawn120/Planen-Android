@@ -1,4 +1,4 @@
-package com.example.planmanager.ui.Today
+package com.example.planmanager.ui
 
 import android.text.TextUtils
 import androidx.lifecycle.LiveData

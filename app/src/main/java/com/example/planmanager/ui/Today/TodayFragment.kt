@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
+import com.example.planmanager.ui.DeadlineViewModel
 import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {

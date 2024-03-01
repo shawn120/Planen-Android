@@ -1,5 +1,7 @@
 package com.example.planmanager
 
+import com.example.planmanager.data.ToDoItem
+
 class DummyTodoList {
 
     companion object {

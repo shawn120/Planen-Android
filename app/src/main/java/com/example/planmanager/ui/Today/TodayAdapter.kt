@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.Deadline
 import com.example.planmanager.data.TaskItem
+import com.example.planmanager.data.ToDoItem
 import com.example.planmanager.util.TaskType
 
 class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
@@ -47,6 +48,8 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
         private val startDateTV: TextView = view.findViewById(R.id.tv_ddl_start_date)
         private var currentDeadline: Deadline? = null
 
+        private var todoTV: TextView = view.findViewById(R.id.tv_todo_text)
+        private var currentTodo: ToDoItem? = null
         fun bind(taskItem: TaskItem) {
             if (taskItem.taskType == TaskType.DEADLINE) {
                 currentDeadline = taskItem.deadline
@@ -55,6 +58,10 @@ class TodayAdapter : RecyclerView.Adapter<TodayAdapter.TodayViewHolder>() {
                 deadlineProgressPB.progress = taskItem.deadline?.percentagePassed!!
                 deadlinePercentageTV.text = taskItem.deadline?.percentagePassed.toString()+"%"
                 startDateTV.text = taskItem.deadline?.startDate
+            }
+            else if (taskItem.taskType == TaskType.TODO) {
+                currentTodo = taskItem.todo
+                todoTV.text = taskItem.todo?.text
             }
 
         }

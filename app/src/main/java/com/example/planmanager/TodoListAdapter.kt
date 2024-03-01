@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.cardview.widget.CardView
+import com.example.planmanager.data.ToDoItem
 
 class TodoListAdapter(
     private val toDoItem: List<ToDoItem>) : RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder>(){

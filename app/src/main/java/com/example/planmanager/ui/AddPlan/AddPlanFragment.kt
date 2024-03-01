@@ -1,6 +1,7 @@
 package com.example.planmanager.ui.AddPlan
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -11,13 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.planmanager.R
-import com.example.planmanager.ToDoItem
-import com.example.planmanager.TodoListViewModel
+import com.example.planmanager.data.ToDoItem
+import com.example.planmanager.ui.TaskViewModel
 import com.google.android.material.tabs.TabLayout
 
 class AddPlanFragment : Fragment(R.layout.fragment_add_plan) {
 
-    private val todoviewModel: TodoListViewModel by viewModels()
+    private val taskViewModel: TaskViewModel by viewModels()
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
     private lateinit var taskBottomContent: ConstraintLayout
@@ -50,7 +51,8 @@ class AddPlanFragment : Fragment(R.layout.fragment_add_plan) {
             val taskName = taskname.text.toString().trim()
             if(taskName.isNotEmpty()){
                 val todoItem = ToDoItem(taskName)
-                todoviewModel.addTodoItem(todoItem)
+                taskViewModel.loadTodo(todoItem)
+                Log.d("LookAtHere", "button being hit, input is {$taskName}")
                 taskname.text.clear()
                 requireActivity().supportFragmentManager.popBackStack()
             } else{

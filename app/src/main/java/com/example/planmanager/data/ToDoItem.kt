@@ -1,4 +1,4 @@
-package com.example.planmanager
+package com.example.planmanager.data
 
 data class ToDoItem(
     val text: String,

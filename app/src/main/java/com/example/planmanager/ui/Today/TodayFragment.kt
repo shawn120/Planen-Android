@@ -15,7 +15,7 @@ import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter()
-    private val viewModel: TodayViewModel by viewModels()
+    private val viewModel: DeadlineViewModel by viewModels()
     private lateinit var deadlineListRV: RecyclerView
 
 

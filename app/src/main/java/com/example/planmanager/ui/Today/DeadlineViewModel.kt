@@ -1,15 +1,12 @@
 package com.example.planmanager.ui.Today
 
 import android.text.TextUtils
-import android.util.Log
-import android.widget.Button
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.planmanager.R
 import com.example.planmanager.data.Deadline
 
-class TodayViewModel : ViewModel() {
+class DeadlineViewModel : ViewModel() {
 
     private var _deadlineItems = MutableLiveData<MutableList<Deadline>?>(null)
     val deadlineItems: LiveData<MutableList<Deadline>?> = _deadlineItems

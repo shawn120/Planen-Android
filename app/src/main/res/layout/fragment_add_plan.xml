@@ -19,8 +19,8 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        android:background="#FFFFFF"
 
+        android:background="#FFFFFF"
         android:textSize="60sp"
         app:layout_constraintBottom_toTopOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +53,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,24 +62,25 @@
 
     <ScrollView
         android:id="@+id/task_scroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="32dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabLayout">
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/taskBottomContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="32dp"
-            android:background="#FFFFFF"
+            android:layout_marginBottom="0dp"
             android:orientation="vertical"
             android:rotationX="0"
             android:visibility="visible"
@@ -99,61 +100,78 @@
                 android:layout_marginEnd="24dp"
                 android:hint="@string/edit_task"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/textViewDate"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <DatePicker
-                android:id="@+id/selectDate"
-                style="@android:style/Widget.DatePicker"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:backgroundTintMode="add"
-                android:datePickerMode="calendar"
-                android:headerBackground="#90D8AD"
-                android:visibility="visible"
-                android:yearListSelectorColor="#6DAAAAAA"
-                app:layout_constraintBottom_toBottomOf="@+id/task_buttonCancel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />
+            <!--            <DatePicker-->
+            <!--                android:id="@+id/selectDate"-->
+            <!--                style="@android:style/Widget.DatePicker"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="24dp"-->
+            <!--                android:layout_marginEnd="24dp"-->
+            <!--                android:backgroundTintMode="add"-->
+            <!--                android:datePickerMode="calendar"-->
+            <!--                android:headerBackground="#90D8AD"-->
+            <!--                android:visibility="visible"-->
+            <!--                android:yearListSelectorColor="#6DAAAAAA"-->
+            <!--                app:layout_constraintBottom_toBottomOf="@+id/task_buttonCancel"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />-->
 
-            <TextView
-                android:id="@+id/textViewDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <EditText
+                android:id="@+id/selectDate_edit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTintMode="add"
                 android:clickable="true"
-                android:focusable="true"
-                android:text="@string/textview_selectDate"
-                android:textColor="#0B0A0A"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/selectDate"
+                android:datePickerMode="calendar"
+                android:focusable="false"
+                android:hint="Select Date"
+                android:inputType="none"
+                app:layout_constraintBottom_toTopOf="@+id/task_buttonCancel"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textViewDate"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="24dp"-->
+            <!--                android:layout_marginTop="8dp"-->
+            <!--                android:layout_marginEnd="24dp"-->
+            <!--                android:clickable="true"-->
+            <!--                android:focusable="true"-->
+            <!--                android:text="@string/textview_selectDate"-->
+            <!--                android:textColor="#0B0A0A"-->
+            <!--                android:textSize="20sp"-->
+            <!--                app:layout_constraintBottom_toTopOf="@+id/selectDate"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="0.0"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />-->
 
             <Button
                 android:id="@+id/task_buttonCancel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="#90D8AD"
                 android:backgroundTintMode="add"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="@string/button_cancel"
-                android:textSize="27sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/task_buttonDone"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,9 +182,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="#90D8AD"
                 android:backgroundTintMode="src_atop"
                 android:insetTop="0dp"
@@ -174,11 +191,10 @@
                 android:text="@string/button_done"
                 android:textColor="#FFFFFF"
                 android:textColorLink="#80FFFFFF"
-                android:textSize="28sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/task_buttonCancel"
-                app:layout_constraintTop_toBottomOf="@+id/selectDate" />
+                app:layout_constraintStart_toEndOf="@+id/task_buttonCancel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

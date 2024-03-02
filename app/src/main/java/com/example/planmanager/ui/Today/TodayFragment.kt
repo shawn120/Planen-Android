@@ -3,27 +3,24 @@ package com.example.planmanager.ui.Today
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.navigation.fragment.findNavController
-import com.example.planmanager.R
-import com.example.planmanager.TodoListAdapter
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.planmanager.data.ToDoItem
+import com.example.planmanager.R
+import com.example.planmanager.ui.AddPlan.AddPlanFragment
 import com.example.planmanager.ui.TaskViewModel
 import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter()
-    private val viewModel: TaskViewModel by viewModels()
+    val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
-    private lateinit var todorecyclerView: RecyclerView
-    private lateinit var todoadapter: TodoListAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,28 +30,30 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         taskListRV = view.findViewById(R.id.rv_task_list)
         taskListRV.layoutManager = LinearLayoutManager(requireContext())
         taskListRV.setHasFixedSize(true)
-
         taskListRV.adapter = adapter
 
+        val toolbar: ImageButton = view.findViewById(R.id.today_add_button)
 
-//         todoListViewModel.todoItems.observe(requireContext()) {
-//
-//             todoData -> todoadapter.updateTodoList(todoData)
-//
-//         }
+        toolbar.setOnClickListener{
+            val popupMenu = PopupMenu(requireContext(), toolbar)
+            popupMenu.menuInflater.inflate(R.menu.add_plan, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.menu_task -> {
+                        val dialog = AddPlanFragment(this@TodayFragment)
+                        dialog.show(requireFragmentManager(), "add_plan_dialog")
+                        true
+                    }
+                    R.id.menu_deadline -> {
+                        // Handle menu deadline item click
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
 
-//         todoadapter.notifyDataSetChanged()
-
-         val buttonAddPlan: Button = view.findViewById(R.id.today_add_button)
-         buttonAddPlan.setOnClickListener {
-             findNavController().navigate(R.id.navigate_to_add_plan)
-         }
-//         return root
-//     }
-//     override fun onDestroyView() {
-//         super.onDestroyView()
-//         _binding = null
-// =======
         val etDateEntry = view.findViewById<EditText>(R.id.et_ddl_pick)
 
         addBtn.setOnClickListener {
@@ -66,11 +65,13 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             taskListRV.scrollToPosition(0)
         }
 
-        viewModel.taskItems.observe(viewLifecycleOwner){ taskItems ->
-            Log.d("LookAtHere", "new item: {$taskItems}")
+        viewModel.taskItems.observe(viewLifecycleOwner){
+            taskItems ->
+            Log.d("LookAtHere", "todayfragment new item: {$taskItems}")
             if (taskItems != null) {
                 adapter.updateTasks(taskItems)
             }
+            taskListRV.scrollToPosition(0)
         }
 
         // Set up a DatePickerDialog when the EditText is clicked
@@ -94,6 +95,5 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             datePickerDialog.show()
         }
 
-// >>>>>>> shawn
     }
 }

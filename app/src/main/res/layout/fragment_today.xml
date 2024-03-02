@@ -8,38 +8,53 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<!-- <<<<<<< Hsuan -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/today_add_button"
-            android:layout_width="58dp"
-            android:layout_height="75dp"
-            android:background="#00457713"
-            android:backgroundTint="#1283606A"
-            android:backgroundTintMode="multiply"
-            app:icon="@android:drawable/ic_menu_add"
-            app:iconTint="#050505"
-            app:iconTintMode="src_in"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/app_toolbar"
+            style="?attr/toolbarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#00FBF6F6"
+            android:minHeight="?attr/actionBarSize"
+            app:layout_constraintBottom_toTopOf="@+id/et_title_entry"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.954"
-            app:layout_constraintStart_toStartOf="parent" />
-<!-- ======= -->
-    <EditText
-        android:id="@+id/et_title_entry"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter a deadline title"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:inputType="text"/>
+            app:layout_constraintHorizontal_bias="0.95"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            app:title="@string/title_today">
 
-    <EditText
+            <ImageButton
+                android:id="@+id/today_add_button"
+                style="@android:style/Widget.ImageButton"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="end"
+                android:background="@drawable/baseline_add_circle_24"
+                android:clickable="true"
+                android:contentDescription="Add Button"
+                tools:layout_editor_absoluteX="744dp"
+                tools:layout_editor_absoluteY="16dp" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <EditText
+            android:id="@+id/et_title_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:hint="Enter a deadline title"
+            android:inputType="text"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
         android:id="@+id/et_ddl_pick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,6 +81,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_add" />
+
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 <!-- >>>>>>> shawn -->

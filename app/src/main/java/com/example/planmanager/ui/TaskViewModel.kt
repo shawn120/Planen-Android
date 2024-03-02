@@ -37,7 +37,6 @@ class TaskViewModel : ViewModel() {
         }
 
     }
-
     fun loadTodo(todoItem: ToDoItem) {
         var currentList = _taskItems.value
         val newTodo = TaskItem (
@@ -45,12 +44,10 @@ class TaskViewModel : ViewModel() {
             todo = todoItem
         )
         if (currentList == null) {
-
             currentList = mutableListOf(newTodo)
         } else {
-            currentList.add(0, newTodo)
+            currentList.add(0,newTodo)
         }
-        _taskItems.value = currentList
-        Log.d("LookATHere", "{$currentList}")
+        _taskItems.value = currentList;
     }
 }

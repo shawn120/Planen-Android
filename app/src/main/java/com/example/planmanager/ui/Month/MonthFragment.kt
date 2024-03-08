@@ -64,7 +64,7 @@ class MonthFragment : Fragment() {
                         // Assuming ToDoItem has a date field; adjust as needed
                         // For example, if ToDoItem also uses a String for dates similar to Deadline
                         // taskItem.todo?.date == date
-                        false // Change this based on your ToDoItem structure
+                        false
                     }
                     TaskType.CALENDAR -> {
                         // Handle CALENDAR type if it's related to showing tasks for selected dates
@@ -74,7 +74,7 @@ class MonthFragment : Fragment() {
             }
 
             if (!tasksForDate.isNullOrEmpty()) {
-                // Replace with your preferred method of displaying tasks
+                // Replace
                 Toast.makeText(context, "Tasks for $date: ${tasksForDate.size}", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "No tasks for selected date", Toast.LENGTH_SHORT).show()

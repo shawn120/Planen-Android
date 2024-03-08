@@ -123,6 +123,7 @@ class TodayAdapter(
         onClick: (TaskItem) -> Unit
     ) : RecyclerView.ViewHolder(view) {
         private var todoTV: TextView = view.findViewById(R.id.tv_todo_text)
+        private var todoDateTV: TextView = view.findViewById(R.id.tv_todo_date)
         private var currentTodo: ToDoItem? = null
         private var deadlineSubCard: ConstraintLayout = view.findViewById(R.id.ddl_sub_card)
         private var todoSubCard: ConstraintLayout = view.findViewById(R.id.todo_sub_card)
@@ -142,6 +143,7 @@ class TodayAdapter(
             currentTodo = taskItem.todo
             currentTodo?.let {
                 todoTV.text = it.text
+                todoDateTV.text = it.date
             }
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.VISIBLE

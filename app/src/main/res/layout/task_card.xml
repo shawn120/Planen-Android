@@ -102,7 +102,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_todo_todo_date"
+            android:id="@+id/tv_todo_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="2024-01-01"

@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.Month.MonthFragment">
 
-    <Button
-        android:id="@+id/month_add_button"
-        android:layout_width="58dp"
-        android:layout_height="75dp"
-        android:background="#00457713"
-        android:backgroundTint="#1283606A"
-        android:backgroundTintMode="multiply"
-        app:icon="@android:drawable/ic_menu_add"
-        app:iconTint="#050505"
-        app:iconTintMode="src_in"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.013" />
 
     <TextView
         android:id="@+id/text_month"

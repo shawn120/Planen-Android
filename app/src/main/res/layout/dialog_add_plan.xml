@@ -10,7 +10,7 @@
     android:background="#90609F72"
     android:orientation="vertical"
     android:windowSoftInputMode="adjustResize"
-    tools:context="ui.AddPlan.AddPlanFragment">
+    tools:context="ui.AddPlan.AddPlanDialog">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
@@ -91,7 +91,6 @@
             app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible">
 
-
             <EditText
                 android:id="@+id/editTextTaskName"
                 android:layout_width="0dp"
@@ -105,25 +104,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--            <DatePicker-->
-            <!--                android:id="@+id/selectDate"-->
-            <!--                style="@android:style/Widget.DatePicker"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="24dp"-->
-            <!--                android:layout_marginEnd="24dp"-->
-            <!--                android:backgroundTintMode="add"-->
-            <!--                android:datePickerMode="calendar"-->
-            <!--                android:headerBackground="#90D8AD"-->
-            <!--                android:visibility="visible"-->
-            <!--                android:yearListSelectorColor="#6DAAAAAA"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/task_buttonCancel"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/textViewDate" />-->
-
             <EditText
-                android:id="@+id/selectDate_edit"
+                android:id="@+id/task_selectDate_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
@@ -133,6 +115,7 @@
                 android:backgroundTintMode="add"
                 android:clickable="true"
                 android:datePickerMode="calendar"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
                 android:focusable="false"
                 android:hint="Select Date"
                 android:inputType="none"
@@ -140,24 +123,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/textViewDate"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_marginStart="24dp"-->
-            <!--                android:layout_marginTop="8dp"-->
-            <!--                android:layout_marginEnd="24dp"-->
-            <!--                android:clickable="true"-->
-            <!--                android:focusable="true"-->
-            <!--                android:text="@string/textview_selectDate"-->
-            <!--                android:textColor="#0B0A0A"-->
-            <!--                android:textSize="20sp"-->
-            <!--                app:layout_constraintBottom_toTopOf="@+id/selectDate"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintHorizontal_bias="0.0"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/editTextTaskName" />-->
 
             <Button
                 android:id="@+id/task_buttonCancel"
@@ -174,8 +139,7 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/task_buttonDone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/selectDate" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/task_buttonDone"
@@ -200,19 +164,24 @@
 
     <ScrollView
         android:id="@+id/deadline_scroll"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0"
         tools:visibility="gone">
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/deadlineBottomContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="0dp"
@@ -228,58 +197,42 @@
 
 
             <EditText
+                android:id="@+id/deadline_selectStart_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTintMode="add"
+                android:clickable="true"
+                android:datePickerMode="calendar"
+                android:focusable="false"
+                android:hint="Select Start Date"
+                android:inputType="none"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
+                app:layout_constraintBottom_toTopOf="@+id/deadline_selectDue_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDeadlineName" />
+
+            <EditText
                 android:id="@+id/editTextDeadlineName"
-                android:layout_width="305dp"
+                android:layout_width="match_parent"
                 android:layout_height="71dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
                 android:hint="@string/edit_task"
                 android:textSize="20sp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                app:layout_constraintBottom_toTopOf="@+id/deadline_selectStart_edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginBottom="148dp"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/deadline_buttonDone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextDeadlineName">
-
-                <TextView
-                    android:id="@+id/textViewSelectDueDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="0dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="@string/textview_dueDate"
-                    android:textColor="#0B0A0A"
-                    android:textSize="20sp" />
-
-                <EditText
-                    android:id="@+id/editTextDeadlineDueDate"
-                    android:layout_width="250dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="0dp"
-                    android:hint="@string/edit_dueDate"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:layout_editor_absoluteY="110dp" />
-
-
-            </LinearLayout>
-
             <Button
                 android:id="@+id/deadline_buttonDone"
-                android:layout_width="308dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="8dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
                 android:backgroundTint="#90D8AD"
                 android:backgroundTintMode="src_atop"
                 android:insetTop="0dp"
@@ -287,27 +240,48 @@
                 android:text="@string/button_done"
                 android:textColor="#FFFFFF"
                 android:textColorLink="#80FFFFFF"
-                android:textSize="34sp"
-                app:layout_constraintBottom_toTopOf="@+id/deadline_buttonCancel"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-            <Button
-                android:id="@+id/deadline_buttonCancel"
-                android:layout_width="308dp"
-                android:layout_height="44dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="240dp"
-                android:backgroundTint="#90D8AD"
-                android:backgroundTintMode="add"
-                android:text="@string/button_cancel"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/deadline_buttonDone" />
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/deadline_buttonCancel" />
 
+            <EditText
+                android:id="@+id/deadline_selectDue_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTintMode="add"
+                android:clickable="true"
+                android:datePickerMode="calendar"
+                android:focusable="false"
+                android:hint="Select Due Date"
+                android:inputType="none"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
+                app:layout_constraintBottom_toTopOf="@+id/deadline_buttonCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/deadline_selectStart_edit" />
+
+            <Button
+                android:id="@+id/deadline_buttonCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="add"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_cancel"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/deadline_buttonDone"
+                app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

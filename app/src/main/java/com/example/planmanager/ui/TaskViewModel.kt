@@ -15,12 +15,13 @@ class TaskViewModel : ViewModel() {
     private var _taskItems = MutableLiveData<MutableList<TaskItem>?>(null)
     val taskItems: LiveData<MutableList<TaskItem>?> = _taskItems
 
-    fun loadDeadline(newDeadlineTitle: String, deadlineDate: String){
+    fun loadDeadline(newDeadlineTitle: String, deadlineDate: String, startDate: String){
         if (!TextUtils.isEmpty(newDeadlineTitle) && !TextUtils.isEmpty(deadlineDate)) {
             val newDeadline = Deadline(
                 newDeadlineTitle,
                 deadlineDate,
-                "2024-02-22"
+                startDate
+//                "2024-02-22"
             )
             val newTask = TaskItem(
                 taskType = TaskType.DEADLINE,

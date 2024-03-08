@@ -35,10 +35,7 @@ class MonthFragment : Fragment() {
         monthViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-        val buttonAddPlan: Button = root.findViewById(R.id.month_add_button)
-        buttonAddPlan.setOnClickListener {
-            findNavController().navigate(R.id.navigate_to_add_plan)
-        }
+
         return root
     }
 

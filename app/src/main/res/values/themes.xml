@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.PlanManager"
-        parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#90609F72</item>
         <item name="colorPrimaryVariant">#010201</item>

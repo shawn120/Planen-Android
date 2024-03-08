@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.planmanager.databinding.FragmentMonthBinding
@@ -11,30 +12,27 @@ import com.example.planmanager.databinding.FragmentMonthBinding
 class MonthFragment : Fragment() {
 
     private var _binding: FragmentMonthBinding? = null
-    // This property is only valid between onCreateView and onDestroyView.
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var monthViewModel: MonthViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        monthViewModel = ViewModelProvider(this)[MonthViewModel::class.java]
+        val monthViewModel =
+            ViewModelProvider(this).get(MonthViewModel::class.java)
 
         _binding = FragmentMonthBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+        val root: View = binding.root
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Observe the LiveData object in the ViewModel
+        val textView: TextView = binding.textMonth
         monthViewModel.text.observe(viewLifecycleOwner) {
-            binding.textMonth.text = it
+            textView.text = it
         }
-
-        // Set the CalendarView's date to the current system time
-        binding.calendarView.date = System.currentTimeMillis()
+        return root
     }
 
     override fun onDestroyView() {

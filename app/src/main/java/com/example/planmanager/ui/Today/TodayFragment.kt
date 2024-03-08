@@ -8,17 +8,20 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.PopupMenu
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
+import com.example.planmanager.data.TaskItem
 import com.example.planmanager.ui.AddPlan.AddPlanFragment
 import com.example.planmanager.ui.TaskViewModel
+import com.example.planmanager.util.TaskType
 import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
-    private val adapter = TodayAdapter()
+    private val adapter = TodayAdapter(::onTaskCardClick)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
 
@@ -95,5 +98,14 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             datePickerDialog.show()
         }
 
+    }
+    private fun onTaskCardClick(task: TaskItem) {
+        if (task.taskType ==TaskType.DEADLINE) {
+            Log.d("TODOFRAGMENT", "a ${task.deadline?.title} is being clicked")
+        } else {
+            Log.d("TODOFRAGMENT", "a ${task.todo?.text} is being clicked")
+        }
+        val dialog = AddPlanFragment(this@TodayFragment)
+        dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
 }

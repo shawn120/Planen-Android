@@ -10,9 +10,6 @@
         android:name="com.example.planmanager.ui.Today.TodayFragment"
         android:label="@string/title_today"
         tools:layout="@layout/fragment_today" />
-        <action
-            android:id="@+id/navigate_to_add_plan"
-            app:destination="@id/navigation_addPlan" />
 
     <fragment
         android:id="@+id/navigation_month"
@@ -26,9 +23,4 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
-        android:id="@+id/navigation_addPlan"
-        android:name="com.example.planmanager.ui.AddPlan.AddPlanFragment"
-        android:label="@string/title_addPlan"
-        tools:layout="@layout/fragment_add_plan" />
 </navigation>

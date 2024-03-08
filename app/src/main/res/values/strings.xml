@@ -3,10 +3,11 @@
     <string name="title_today">Today</string>
     <string name="title_month">Month</string>
     <string name="title_profile">Profile</string>
-    <string name="title_addPlan">Add Plan</string>
+    <string name="title_addPlan">ADD PLAN</string>
 
     <string name="title_addTask">Task</string>
     <string name="title_addDeadline">Deadline</string>
+    <string name="title_addCalendar">Calendar</string>
 
     <string name="edit_task"> Task : </string>
     <string name="textview_selectDate"> Select Date </string>
@@ -15,5 +16,8 @@
     <string name="button_done">DONE</string>
     <string name="edit_dueDate">yyyy/mm/dd</string>
     <string name="textview_dueDate"> Due Date : </string>
+
+    <string name="action_add_plan">Add Plan</string>
+
 
 </resources>

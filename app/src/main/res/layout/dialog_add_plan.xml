@@ -50,12 +50,12 @@
             tools:layout_editor_absoluteY="8dp" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tabCalendar"
+            android:id="@+id/tabSchedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:clickable="false"
-            android:text="@string/title_addCalendar" />
+            android:text="@string/title_addSchedule" />
 
     </com.google.android.material.tabs.TabLayout>
 

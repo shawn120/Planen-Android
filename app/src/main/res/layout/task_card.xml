@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9999-99-99"
-            android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,7 +64,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9999-99-99"
-            android:textColor="@android:color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:id="@+id/todo_sub_card"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <CheckBox
             android:id="@+id/todo_checkbox"

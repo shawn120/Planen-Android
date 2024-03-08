@@ -69,14 +69,13 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 
     }
 
-    }
     private fun onTaskCardClick(task: TaskItem) {
         if (task.taskType ==TaskType.DEADLINE) {
             Log.d("TODOFRAGMENT", "a ${task.deadline?.title} is being clicked")
         } else {
             Log.d("TODOFRAGMENT", "a ${task.todo?.text} is being clicked")
         }
-        val dialog = AddPlanDialog(this@TodayFragment)
-        dialog.show(requireFragmentManager(), "add_plan_dialog")
+//        val dialog = AddPlanDialog(this@TodayFragment)
+//        dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
 }

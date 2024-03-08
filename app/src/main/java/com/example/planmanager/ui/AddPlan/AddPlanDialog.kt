@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.planmanager.R
+import com.example.planmanager.data.ScheduleItem
 import com.example.planmanager.data.ToDoItem
 import com.example.planmanager.ui.Today.TodayFragment
 import com.google.android.material.tabs.TabLayout
@@ -192,7 +193,7 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
             val scheduleName = schedulename.text.toString().trim()
             val scheduleLocation = scheduleLocation.text.toString().trim()
             val scheduleDate = scheduleSelectDateEdit.text.toString().trim().substringAfter(":").trim()
-            val scheduleTime = scheduleSelectTimeEdit.text.toString().trim()
+            val scheduleTime = scheduleSelectTimeEdit.text.toString().trim().substringAfter(":").trim()
 
             if (scheduleName.isNotEmpty()) {
                 val scheduleItem = ScheduleItem(scheduleName,scheduleLocation,scheduleDate,scheduleTime)

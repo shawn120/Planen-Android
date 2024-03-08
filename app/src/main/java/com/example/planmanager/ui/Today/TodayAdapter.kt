@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.Deadline
+import com.example.planmanager.data.ScheduleItem
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.data.ToDoItem
 import com.example.planmanager.util.TaskType
@@ -23,6 +24,7 @@ class TodayAdapter(
     companion object {
         private const val VIEW_TYPE_DEADLINE = 0
         private const val VIEW_TYPE_TODO = 1
+        private const val VIEW_TYPE_SCHEDULE = 2
     }
 
     fun updateTasks(newTasks: MutableList<TaskItem>) {
@@ -32,10 +34,10 @@ class TodayAdapter(
         notifyItemRangeInserted(0, tasks.size)
     }
 
-    fun deleteDeadline(position: Int): TaskItem {
-        val deadline = tasks.removeAt(position)
+    fun deleteTask(position: Int): TaskItem {
+        val task = tasks.removeAt(position)
         notifyItemRemoved(position)
-        return deadline
+        return task
     }
 
     override fun getItemCount() = tasks.size
@@ -47,6 +49,7 @@ class TodayAdapter(
         return when (taskItem.taskType) {
             TaskType.DEADLINE -> VIEW_TYPE_DEADLINE
             TaskType.TODO -> VIEW_TYPE_TODO
+            TaskType.SCHEDULE -> VIEW_TYPE_SCHEDULE
 
             else -> throw IllegalArgumentException("Invalid task type")
         }
@@ -61,6 +64,11 @@ class TodayAdapter(
             VIEW_TYPE_TODO -> {
                 val view = layoutInflater.inflate(R.layout.task_card, parent, false)
                 TodoViewHolder(view, onTaskCardClick)
+            }
+
+            VIEW_TYPE_SCHEDULE -> {
+                val view = layoutInflater.inflate(R.layout.task_card, parent, false)
+                ScheduleViewHolder(view, onTaskCardClick)
             }
             else -> throw IllegalArgumentException("Invalid view type")
         }
@@ -81,6 +89,12 @@ class TodayAdapter(
                     holder.bindTodo(taskItem)
                 }
             }
+            is ScheduleViewHolder -> {
+                if (taskItem.taskType == TaskType.SCHEDULE) {
+                    Log.d("LookatHere" , "ScheduleviewHolder{$taskItem}")
+                    holder.bindSchedule(taskItem)
+                }
+            }
         }
     }
 
@@ -96,7 +110,7 @@ class TodayAdapter(
         private var currentDeadline: Deadline? = null
         private var deadlineSubCard: ConstraintLayout = view.findViewById(R.id.ddl_sub_card)
         private var todoSubCard: ConstraintLayout = view.findViewById(R.id.todo_sub_card)
-
+        private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
         init{
             itemView.setOnClickListener {
                 val currentTask = TaskItem(
@@ -116,6 +130,7 @@ class TodayAdapter(
             startDateTV.text = taskItem.deadline?.startDate
             deadlineSubCard.visibility=View.VISIBLE
             todoSubCard.visibility=View.INVISIBLE
+            scheduleSubCard.visibility=View.INVISIBLE
         }
     }
     inner class TodoViewHolder(
@@ -127,7 +142,7 @@ class TodayAdapter(
         private var currentTodo: ToDoItem? = null
         private var deadlineSubCard: ConstraintLayout = view.findViewById(R.id.ddl_sub_card)
         private var todoSubCard: ConstraintLayout = view.findViewById(R.id.todo_sub_card)
-
+        private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
         init{
             itemView.setOnClickListener {
                 val currentTask = TaskItem(
@@ -147,6 +162,43 @@ class TodayAdapter(
             }
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.VISIBLE
+            scheduleSubCard.visibility=View.INVISIBLE
+        }
+    }
+
+    inner class ScheduleViewHolder(
+        view: View,
+        onClick: (TaskItem) -> Unit
+    ) : RecyclerView.ViewHolder(view) {
+        private var scheduleTV: TextView = view.findViewById(R.id.tv_schedule_title)
+        private var scheduleLocationTV: TextView = view.findViewById(R.id.tv_schedule_location)
+        private var scheduleDateTimeTV: TextView = view.findViewById(R.id.tv_schedule_date_time)
+        private var currentSchedule: ScheduleItem? = null
+        private var deadlineSubCard: ConstraintLayout = view.findViewById(R.id.ddl_sub_card)
+        private var todoSubCard: ConstraintLayout = view.findViewById(R.id.todo_sub_card)
+        private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
+
+        init{
+            itemView.setOnClickListener {
+                val currentTask = TaskItem(
+                    taskType = TaskType.SCHEDULE,
+                    schedule = currentSchedule
+                )
+                currentTask.let(onClick)
+            }
+        }
+
+        fun bindSchedule(taskItem: TaskItem) {
+
+            currentSchedule = taskItem.schedule
+            currentSchedule?.let {
+                scheduleTV.text = it.title
+                scheduleLocationTV.text = it.location
+                scheduleDateTimeTV.text = it.date +" "+ it.time
+            }
+            deadlineSubCard.visibility=View.INVISIBLE
+            todoSubCard.visibility=View.INVISIBLE
+            scheduleSubCard.visibility=View.VISIBLE
         }
     }
 }

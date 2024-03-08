@@ -6,10 +6,12 @@
     <string name="title_addPlan">ADD PLAN</string>
 
     <string name="title_addTask">Task</string>
+
     <string name="title_addDeadline">Deadline</string>
     <string name="title_addCalendar">Calendar</string>
 
     <string name="edit_task"> Task : </string>
+    <string name="edit_location">Location : </string>
     <string name="textview_selectDate"> Select Date </string>
     <string name="textview_Date"> Date :  </string>
     <string name="button_cancel">CANCEL</string>

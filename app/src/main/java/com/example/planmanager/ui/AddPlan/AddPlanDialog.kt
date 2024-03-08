@@ -3,6 +3,7 @@ package com.example.planmanager.ui.AddPlan
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -36,10 +37,18 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
     private lateinit var deadlineSelectStartDateEdit: EditText
     private lateinit var deadlineSelectDueDateEdit: EditText
 
+    private lateinit var scheduleScroll: ScrollView
+    private lateinit var schedulecancelbtn: Button
+    private lateinit var scheduledonebtn: Button
+    private lateinit var schedulename: EditText
+    private lateinit var scheduleSelectDateEdit: EditText
+    private lateinit var scheduleSelectTimeEdit: EditText
+    private lateinit var scheduleLocation: EditText
+
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("Add PLAN")
+        builder.setTitle("Add TASK")
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_add_plan, null)
         builder.setView(dialogView)
@@ -70,6 +79,15 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
         val initialDate = "Date : ${year}-${month + 1}-${day}"
         deadlineSelectStartDateEdit.setText(initialDate)
 
+//        <------------------------Calendar-------------------------------->
+
+        scheduleScroll = dialogView.findViewById(R.id.schedule_scroll)
+        schedulecancelbtn = dialogView.findViewById(R.id.schedule_buttonCancel)
+        scheduledonebtn = dialogView.findViewById(R.id.schedule_buttonDone)
+        schedulename = dialogView.findViewById(R.id.editTextScheduleName)
+        scheduleSelectDateEdit = dialogView.findViewById(R.id.schedule_selectDate_edit)
+        scheduleSelectTimeEdit = dialogView.findViewById(R.id.schedule_selectTime)
+        scheduleLocation = dialogView.findViewById(R.id.editTextScheduleLocation)
 
 //        <--------------------------task function----------------------------->
         taskcancelbtn.setOnClickListener {
@@ -107,7 +125,16 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
                 tab?.let {
                     viewPager.currentItem = it.position
                     updateBottomContentVisibility(it.position)
+
+                    val title = when (it.position) {
+                        0 -> "Add TASK"
+                        1 -> "Add DEADLINE"
+                        2 -> "Add CALENDAR"
+                        else -> "Add PLAN"
+                    }
+                    dialog?.setTitle(title)
                 }
+
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
@@ -131,6 +158,9 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
             } else {
                 Toast.makeText(requireContext(), "Please enter a task name", Toast.LENGTH_SHORT).show()
             }
+            deadlinename.text.clear()
+            deadlineSelectStartDateEdit.text.clear()
+            deadlineSelectDueDateEdit.text.clear()
         }
 
         deadlineSelectStartDateEdit.setOnClickListener {
@@ -152,21 +182,86 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
             }
             datePickerDialog.show()
         }
+
+//    <-----------------------------calendarfunction--------------------------------->
+        schedulecancelbtn.setOnClickListener {
+            dismiss()
+        }
+
+        scheduledonebtn.setOnClickListener {
+            val scheduleName = schedulename.text.toString().trim()
+            val scheduleLocation = scheduleLocation.text.toString().trim()
+            val scheduleDate = scheduleSelectDateEdit.text.toString().trim().substringAfter(":").trim()
+            val scheduleTime = scheduleSelectTimeEdit.text.toString().trim()
+
+            if (scheduleName.isNotEmpty()) {
+                val scheduleItem = ScheduleItem(scheduleName,scheduleLocation,scheduleDate,scheduleTime)
+                todayFragment.viewModel.loadSchedule(scheduleItem)
+
+                schedulename.text.clear()
+                scheduleSelectDateEdit.text.clear()
+                scheduleSelectTimeEdit.text.clear()
+
+                dismiss()
+
+
+            } else {
+                Toast.makeText(requireContext(), "Please enter a task name", Toast.LENGTH_SHORT).show()
+            }
+        }
+        scheduleSelectDateEdit.setOnClickListener {
+            val datePickerDialog = DatePickerDialog(requireContext())
+
+            datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
+                val selectedDate = "Date : ${year}-${month + 1}-${dayOfMonth}"
+                scheduleSelectDateEdit.setText(selectedDate)
+            }
+            datePickerDialog.show()
+        }
+            scheduleSelectTimeEdit.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                val minute = calendar.get(Calendar.MINUTE)
+
+                val timePickerDialog = TimePickerDialog(
+                    requireContext(),
+                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                        // Handle the selected time
+                        val selectedTime = "Time : $hourOfDay:$minute"
+                        scheduleSelectTimeEdit.setText(selectedTime)
+                    },
+                    hour,
+                    minute,
+                    false
+                )
+
+                timePickerDialog.show()
+        }
+
+//     <-------------------common--------------------------->
         tabLayout.getTabAt(0)?.select()
         updateBottomContentVisibility(0)
         return builder.create()
     }
-//    <---------------------------------common------------------------------------------>
     private fun updateBottomContentVisibility(position: Int) {
         when (position) {
             0 -> {
                 taskScroll.visibility = View.VISIBLE
                 deadlineScroll.visibility = View.GONE
+                scheduleScroll.visibility = View.GONE
             }
 
             1 -> {
                 taskScroll.visibility = View.GONE
                 deadlineScroll.visibility = View.VISIBLE
+                scheduleScroll.visibility = View.GONE
+            }
+
+            2 -> {
+                taskScroll.visibility = View.GONE
+                deadlineScroll.visibility = View.GONE
+                scheduleScroll.visibility = View.VISIBLE
+
             }
         }
     }

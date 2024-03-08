@@ -80,7 +80,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/taskBottomContent"
@@ -178,6 +179,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="32dp"
         android:background="#FFFFFF"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -213,10 +215,10 @@
                 android:backgroundTintMode="add"
                 android:clickable="true"
                 android:datePickerMode="calendar"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
                 android:focusable="false"
                 android:hint="Select Start Date"
                 android:inputType="none"
-                android:drawableRight="@drawable/baseline_calendar_month_24"
                 app:layout_constraintBottom_toTopOf="@+id/deadline_selectDue_edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -265,10 +267,10 @@
                 android:backgroundTintMode="add"
                 android:clickable="true"
                 android:datePickerMode="calendar"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
                 android:focusable="false"
                 android:hint="Select Due Date"
                 android:inputType="none"
-                android:drawableRight="@drawable/baseline_calendar_month_24"
                 app:layout_constraintBottom_toTopOf="@+id/deadline_buttonCancel"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -289,6 +291,143 @@
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/deadline_buttonDone"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/schedule_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="#FFFFFF"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+        app:layout_constraintVertical_bias="0.0"
+        tools:visibility="visible">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/scheduleBottomContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:rotationX="0"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tabLayout"
+            tools:visibility="visible">
+
+
+            <EditText
+                android:id="@+id/schedule_selectDate_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTintMode="add"
+                android:clickable="true"
+                android:datePickerMode="calendar"
+                android:drawableRight="@drawable/baseline_calendar_month_24"
+                android:focusable="false"
+                android:hint="Select Date"
+                android:inputType="none"
+                app:layout_constraintBottom_toBottomOf="@+id/schedule_selectTime"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextScheduleLocation" />
+
+            <EditText
+                android:id="@+id/editTextScheduleName"
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/edit_task"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/editTextScheduleLocation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextScheduleLocation"
+                android:layout_width="match_parent"
+                android:layout_height="71dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/edit_location"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@+id/schedule_selectDate_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextScheduleName" />
+
+            <Button
+                android:id="@+id/schedule_buttonDone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="src_atop"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_done"
+                android:textColor="#FFFFFF"
+                android:textColorLink="#80FFFFFF"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/schedule_buttonCancel" />
+
+            <EditText
+                android:id="@+id/schedule_selectTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTintMode="add"
+                android:clickable="true"
+                android:datePickerMode="calendar"
+                android:drawableRight="@drawable/baseline_access_time_24"
+                android:focusable="false"
+                android:hint="Select Time (Option)"
+                android:inputType="none"
+                app:layout_constraintBottom_toTopOf="@+id/schedule_buttonCancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/schedule_selectDate_edit" />
+
+            <Button
+                android:id="@+id/schedule_buttonCancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#90D8AD"
+                android:backgroundTintMode="add"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/button_cancel"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/schedule_buttonDone"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

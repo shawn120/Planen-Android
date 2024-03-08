@@ -1,15 +1,11 @@
 package com.example.planmanager.ui.Today
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.PopupMenu
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -18,11 +14,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
-import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.data.TaskItem
+import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
-import java.util.Calendar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter(::onTaskCardClick)

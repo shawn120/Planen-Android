@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.planmanager.data.ToDoItem
 import com.example.planmanager.data.Deadline
+import com.example.planmanager.data.ScheduleItem
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.util.TaskType
 
@@ -49,6 +50,20 @@ class TaskViewModel : ViewModel() {
         } else {
             currentList.add(0,newTodo)
         }
-        _taskItems.value = currentList;
+        _taskItems.value = currentList
+    }
+
+    fun loadSchedule(scheduleItem: ScheduleItem){
+        var currentList = _taskItems.value
+        val newScheduleTask = TaskItem (
+            taskType = TaskType.SCHEDULE,
+            schedule = scheduleItem
+        )
+        if (currentList == null) {
+            currentList = mutableListOf(newScheduleTask)
+        } else {
+            currentList.add(0,newScheduleTask)
+        }
+        _taskItems.value = currentList
     }
 }

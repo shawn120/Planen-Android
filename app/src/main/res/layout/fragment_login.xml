@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background"
+    android:theme="@style/Theme.Login">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/login"
+        android:text="Plan Manager"
+        android:textColor="@color/white"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:drawableBottom="@drawable/baseline_calendar_month_24"
+        android:drawablePadding="45dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login"
+        android:layout_margin="50dp"
+        android:backgroundTint="@color/design_default_color_secondary"
+        android:text="LOGIN"
+        android:layout_centerHorizontal="true"
+        />
+
+</RelativeLayout>

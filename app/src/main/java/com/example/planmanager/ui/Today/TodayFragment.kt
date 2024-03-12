@@ -43,7 +43,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
                     return when (menuItem.itemId) {
 
                         R.id.action_add_plan -> {
-                            val dialog = AddPlanDialog(this@TodayFragment)
+                            val dialog = AddPlanDialog(this@TodayFragment,null)
                             dialog.show(requireFragmentManager(), "add_plan_dialog")
                             true
                         }

@@ -16,11 +16,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.planmanager.R
 import com.example.planmanager.data.ScheduleItem
 import com.example.planmanager.data.ToDoItem
+import com.example.planmanager.ui.Month.MonthFragment
 import com.example.planmanager.ui.Today.TodayFragment
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import java.util.Calendar
 
-class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment() {
+class AddPlanDialog(private val todayFragment: TodayFragment? ,private val monthFragment: MonthFragment?) : DialogFragment() {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -101,7 +104,12 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
             if (taskName.isNotEmpty()) {
                 val todoItem = ToDoItem(taskName,taskDueDate)
                 Log.d("LookAtHere", "Done button being hit, input is {$taskName}")
-                todayFragment.viewModel.loadTodo(todoItem)
+//                if(todayFragment != null){
+                    todayFragment?.viewModel?.loadTodo(todoItem)
+//                } else if(monthFragment != null){
+//                    monthFragment?.viewModel?.loadTodo(todoItem)
+//                }
+
                 taskname.text.clear()
                 dismiss()
 
@@ -153,7 +161,12 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
 
             val deadlineDueDate = deadlineSelectDueDateEdit.text.toString().trim().substringAfter(":").trim()
             if (deadlineName.isNotEmpty()) {
-                todayFragment.viewModel.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
+//                if(todayFragment != null){
+                    todayFragment?.viewModel?.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
+//                } else if (monthFragment != null){
+//                    monthFragment?.viewModel?.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
+//
+//                }
                 deadlinename.text.clear()
                 dismiss()
             } else {
@@ -197,7 +210,12 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
 
             if (scheduleName.isNotEmpty()) {
                 val scheduleItem = ScheduleItem(scheduleName,scheduleLocation,scheduleDate,scheduleTime)
-                todayFragment.viewModel.loadSchedule(scheduleItem)
+//                if(todayFragment != null){
+                    todayFragment?.viewModel?.loadSchedule(scheduleItem)
+//                } else if(monthFragment != null){
+//                    monthFragment?.viewModel?.loadSchedule(scheduleItem)
+//                }
+
 
                 schedulename.text.clear()
                 scheduleSelectDateEdit.text.clear()
@@ -219,25 +237,26 @@ class AddPlanDialog(private val todayFragment: TodayFragment) : DialogFragment()
             }
             datePickerDialog.show()
         }
-            scheduleSelectTimeEdit.setOnClickListener {
-                val calendar = Calendar.getInstance()
-                val hour = calendar.get(Calendar.HOUR_OF_DAY)
-                val minute = calendar.get(Calendar.MINUTE)
+        scheduleSelectTimeEdit.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
 
-                val timePickerDialog = TimePickerDialog(
-                    requireContext(),
-                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                        // Handle the selected time
-                        val selectedTime = "Time : $hourOfDay:$minute"
-                        scheduleSelectTimeEdit.setText(selectedTime)
-                    },
-                    hour,
-                    minute,
-                    false
-                )
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(hour)
+                .setMinute(minute)
+                .setTitleText("Select Time")
+                .build()
 
-                timePickerDialog.show()
+            timePicker.addOnPositiveButtonClickListener {
+                val selectedTime = "Time : ${timePicker.hour}:${timePicker.minute}"
+                scheduleSelectTimeEdit.setText(selectedTime)
+            }
+
+            timePicker.show(parentFragmentManager, "TimePicker")
         }
+
 
 //     <-------------------common--------------------------->
         tabLayout.getTabAt(0)?.select()

@@ -5,16 +5,18 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.planmanager.R
-import com.example.planmanager.ui.Profile.ProfileFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.material.button.MaterialButton
 import com.google.android.gms.common.api.ApiException
 import com.example.planmanager.ui.Today.TodayFragment
+import com.example.planmanager.ui.Profile.ProfileFragment
 
 
 
@@ -47,22 +49,23 @@ class LoginFragment : Fragment() {
             signIn()
         }
 
-        return view
+        val username: TextView = view.findViewById(R.id.username)
+        val password: TextView = view.findViewById(R.id.password)
+        val loginBtn: MaterialButton = view.findViewById(R.id.loginbtn)
 
-    //        val username: TextView = view.findViewById(R.id.username)
-    //        val password: TextView = view.findViewById(R.id.password)
-    //
-    //        val loginBtn: MaterialButton = view.findViewById(R.id.loginbtn)
-    //
-    //        loginBtn.setOnClickListener {
-    //            if (username.text.toString() == "admin" && password.text.toString() == "admin") {
-    //                // correct
-    //                Toast.makeText(requireContext(), "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show()
-    //            } else {
-    //                // incorrect
-    //                Toast.makeText(requireContext(), "LOGIN FAILED !!!", Toast.LENGTH_SHORT).show()
-    //            }
-    //        }
+            // temp way for log in
+        loginBtn.setOnClickListener {
+            if (username.text.toString() == "admin" && password.text.toString() == "admin") {
+                // correct
+                Toast.makeText(requireContext(), "LOGIN SUCCESSFUL", Toast.LENGTH_SHORT).show()
+
+            } else {
+                // incorrect
+                Toast.makeText(requireContext(), "LOGIN FAILED !!!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        return view
 
     }
 
@@ -86,7 +89,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToStart() {
-        val intent = Intent(requireContext(), TodayFragment::class.java)
+        val intent = Intent(requireContext(), ProfileFragment::class.java)
         startActivity(intent)
     }
 

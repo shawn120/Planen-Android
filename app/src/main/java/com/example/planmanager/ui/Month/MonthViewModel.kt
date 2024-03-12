@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 class MonthViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Month Fragment"
+        value = " "
     }
     val text: LiveData<String> = _text
 }

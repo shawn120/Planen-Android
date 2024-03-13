@@ -1,15 +1,21 @@
 package com.example.planmanager.data
 
+
 import androidx.loader.content.AsyncTaskLoader
 import com.example.planmanager.util.TaskType
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.example.planmanager.util.TaskType
+import java.io.Serializable
 import java.util.UUID
 
+@Entity
 data class TaskItem(
     //    unique id
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     //    Task type
     var isToDo: Boolean = false,
     var isDeadline: Boolean = false,

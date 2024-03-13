@@ -3,7 +3,6 @@ package com.example.planmanager.ui.AddPlan
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
-import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,8 +13,6 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.example.planmanager.R
-import com.example.planmanager.data.ScheduleItem
-import com.example.planmanager.data.ToDoItem
 import com.example.planmanager.ui.Month.MonthFragment
 import com.example.planmanager.ui.Today.TodayFragment
 import com.google.android.material.tabs.TabLayout
@@ -102,10 +99,12 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
             val taskName = taskname.text.toString().trim()
             val taskDueDate = taskSelectDateEdit.text.toString().trim().substringAfter(":").trim()
             if (taskName.isNotEmpty()) {
-                val todoItem = ToDoItem(taskName,taskDueDate)
                 Log.d("LookAtHere", "Done button being hit, input is {$taskName}")
 //                if(todayFragment != null){
-                    todayFragment?.viewModel?.loadTodo(todoItem)
+                    todayFragment?.viewModel?.loadTodo(
+                        newToDoTitle = taskName,
+                        newToDoDate = taskDueDate
+                    )
 //                } else if(monthFragment != null){
 //                    monthFragment?.viewModel?.loadTodo(todoItem)
 //                }
@@ -209,9 +208,13 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
             val scheduleTime = scheduleSelectTimeEdit.text.toString().trim().substringAfter(":").trim()
 
             if (scheduleName.isNotEmpty()) {
-                val scheduleItem = ScheduleItem(scheduleName,scheduleLocation,scheduleDate,scheduleTime)
 //                if(todayFragment != null){
-                    todayFragment?.viewModel?.loadSchedule(scheduleItem)
+                    todayFragment?.viewModel?.loadSchedule(
+                        newScheduleTitle = scheduleName,
+                        newScheduleLocation = scheduleLocation,
+                        newScheduleDate = scheduleDate,
+                        newScheduleTime = scheduleTime
+                    )
 //                } else if(monthFragment != null){
 //                    monthFragment?.viewModel?.loadSchedule(scheduleItem)
 //                }

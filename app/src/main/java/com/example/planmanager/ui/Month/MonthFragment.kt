@@ -2,12 +2,22 @@ package com.example.planmanager.ui.Month
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import com.example.planmanager.R
 import com.example.planmanager.databinding.FragmentMonthBinding
+import com.example.planmanager.ui.AddPlan.AddPlanDialog
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MonthFragment : Fragment() {
 
@@ -32,11 +42,57 @@ class MonthFragment : Fragment() {
         monthViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.activity_main_menu, menu)
+                }
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+                        R.id.action_add_plan -> {
+                            val dialog = AddPlanDialog(null,this@MonthFragment)
+                            dialog.show(requireFragmentManager(), "add_plan_dialog")
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.STARTED
+        )
+
+        setupCalendar()
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupCalendar() {
+        val calendarView = binding.calendarView
+
+        // Get the current date
+        val currentDate = Calendar.getInstance()
+
+        // Set the current date as the selected date in the CalendarView
+        calendarView.setDate(currentDate.timeInMillis, false, true)
+
+        // Handle date change event
+        calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, dayOfMonth)
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val formattedDate = dateFormat.format(selectedDate.time)
+
+            val textView: TextView = binding.textMonth
+            textView.text = formattedDate
+        }
     }
 }

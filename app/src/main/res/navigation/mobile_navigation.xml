@@ -22,4 +22,5 @@
         android:name="com.example.planmanager.ui.Profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
 </navigation>

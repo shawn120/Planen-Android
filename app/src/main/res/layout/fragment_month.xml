@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.Month.MonthFragment">
 
+
     <TextView
         android:id="@+id/text_month"
         android:layout_width="match_parent"
@@ -19,4 +20,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/text_month"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

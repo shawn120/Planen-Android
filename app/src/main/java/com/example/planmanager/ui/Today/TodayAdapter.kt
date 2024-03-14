@@ -24,9 +24,9 @@ class TodayAdapter(
         private const val VIEW_TYPE_SCHEDULE = 2
     }
 
-    fun updateTasks(newTasks: MutableList<TaskItem>) {
+    fun updateTasks(newTasks: MutableList<TaskItem>?) {
         notifyItemRangeRemoved(0, tasks.size)
-        tasks = newTasks
+        tasks = newTasks?: mutableListOf()
         Log.d("Lookathere","update :${newTasks}")
         notifyItemRangeInserted(0, tasks.size)
     }

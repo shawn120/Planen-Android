@@ -15,5 +15,5 @@ interface TaskItemDao {
     suspend fun delete(task: TaskItem)
 
     @Query("SELECT * FROM TaskItem")
-    fun getAllLocalTasks() : Flow<List<TaskItem>>
+    fun getAllLocalTasks() : Flow<MutableList<TaskItem>?>
 }

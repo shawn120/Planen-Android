@@ -9,18 +9,10 @@ import androidx.lifecycle.ViewModel
 import com.example.planmanager.data.TaskItem
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.planmanager.data.AppDatabase
-import com.example.planmanager.data.ToDoItem
-import com.example.planmanager.data.Deadline
-import com.example.planmanager.data.ScheduleItem
-import com.example.planmanager.data.TaskItem
 import com.example.planmanager.data.TaskItemLocalRepository
-import com.example.planmanager.util.TaskType
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : AndroidViewModel(application){

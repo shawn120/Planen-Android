@@ -8,7 +8,6 @@ import java.util.Calendar
 import java.util.Locale
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.planmanager.util.TaskType
 import java.io.Serializable
 import java.util.UUID
 

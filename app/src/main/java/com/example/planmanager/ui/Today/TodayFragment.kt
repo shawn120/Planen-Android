@@ -32,28 +32,6 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         taskListRV.setHasFixedSize(true)
         taskListRV.adapter = adapter
 
-        val menuHost: MenuHost = requireActivity()
-        menuHost.addMenuProvider(
-            object : MenuProvider {
-                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.activity_main_menu, menu)
-                }
-
-                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                    return when (menuItem.itemId) {
-
-                        R.id.action_add_plan -> {
-                            val dialog = AddPlanDialog(this@TodayFragment,null)
-                            dialog.show(requireFragmentManager(), "add_plan_dialog")
-                            true
-                        }
-                        else -> false
-                    }
-                }
-            },
-            viewLifecycleOwner,
-            Lifecycle.State.STARTED
-        )
         viewModel.taskItemLocalsToday.observe(viewLifecycleOwner) {taskItemLocalsList ->
             Log.d("LookAtHere", "today fragment new item: {$taskItemLocalsList}")
             adapter.updateTasks(taskItemLocalsList)

@@ -8,4 +8,6 @@ class TaskItemLocalRepository(
     suspend fun deleteTaskItem(task: TaskItem) = dao.delete(task)
 
     fun getAllLocalTaskItem() = dao.getAllLocalTasks()
+
+    fun getAllLocalTaskItemToday() = dao.getAllLocalTasksToday()
 }

@@ -118,7 +118,7 @@ class TodayAdapter(
 
         fun bindDeadline(taskItem: TaskItem) {
             currentDeadline = taskItem
-            deadlineTV.text = taskItem.titleDeadline
+            deadlineTV.text = taskItem.title
             deadlineDateTV.text = taskItem.dateDeadline
             deadlineProgressPB.progress = taskItem.percentagePassed
             deadlinePercentageTV.text = taskItem.percentagePassed.toString() + "%"
@@ -149,7 +149,7 @@ class TodayAdapter(
         fun bindTodo(taskItem: TaskItem) {
 
             currentTodo = taskItem
-            todoTV.text = taskItem.titleToDo
+            todoTV.text = taskItem.title
             todoDateTV.text = taskItem.dateToDo
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.VISIBLE
@@ -180,7 +180,7 @@ class TodayAdapter(
         fun bindSchedule(taskItem: TaskItem) {
 
             currentSchedule = taskItem
-            scheduleTV.text = taskItem.titleSchedule
+            scheduleTV.text = taskItem.title
             scheduleLocationTV.text = taskItem.locationSchedule
             scheduleDateTimeTV.text = taskItem.dateSchedule +" "+ taskItem.timeSchedule
             deadlineSubCard.visibility=View.INVISIBLE

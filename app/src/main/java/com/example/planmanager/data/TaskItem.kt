@@ -1,32 +1,35 @@
 package com.example.planmanager.data
 
-import androidx.loader.content.AsyncTaskLoader
+
 import com.example.planmanager.util.TaskType
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import java.util.UUID
 
+@Entity
 data class TaskItem(
     //    unique id
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     //    Task type
     var isToDo: Boolean = false,
     var isDeadline: Boolean = false,
     var isSchedule: Boolean = false,
 
+    //    Universal entry: title
+    var title: String? = null,
+
     //    To-Do
-    var titleToDo: String? = null,
     var dateToDo: String? = null, //for edit date, choose date on calendar(month)
     var completedToDo: Boolean? = false,
 
     //    Deadline
-    var titleDeadline: String? = null,
     var dateDeadline: String? = null,
     var startDateDeadline: String? = null,
 
     //    Schedule
-    var titleSchedule: String? = null,
     var locationSchedule: String? = null,
     var dateSchedule: String? = null,
     var timeSchedule: String? = null,

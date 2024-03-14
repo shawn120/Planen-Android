@@ -54,11 +54,9 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             viewLifecycleOwner,
             Lifecycle.State.STARTED
         )
-        viewModel.taskItems.observe(viewLifecycleOwner) { taskItems ->
-            Log.d("LookAtHere", "todayfragment new item: {$taskItems}")
-            if (taskItems != null) {
-                adapter.updateTasks(taskItems)
-            }
+        viewModel.taskItemLocalsToday.observe(viewLifecycleOwner) {taskItemLocalsList ->
+            Log.d("LookAtHere", "today fragment new item: {$taskItemLocalsList}")
+            adapter.updateTasks(taskItemLocalsList)
             taskListRV.scrollToPosition(0)
         }
 

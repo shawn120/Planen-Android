@@ -11,16 +11,18 @@ import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.example.planmanager.R
 import com.example.planmanager.ui.Month.MonthFragment
+import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.ui.Today.TodayFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.util.Calendar
 
-class AddPlanDialog(private val todayFragment: TodayFragment? ,private val monthFragment: MonthFragment?) : DialogFragment() {
+class AddPlanDialog : DialogFragment() {
 
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
@@ -52,6 +54,7 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
         builder.setTitle("Add TASK")
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_add_plan, null)
+        val viewModel: TaskViewModel by viewModels()
         builder.setView(dialogView)
 
         tabLayout = dialogView.findViewById(R.id.tabLayout)
@@ -100,7 +103,7 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
             if (taskName.isNotEmpty()) {
                 Log.d("LookAtHere", "Done button being hit, input is {$taskName}")
 //                if(todayFragment != null){
-                    todayFragment?.viewModel?.loadTodo(
+                    viewModel.loadTodo(
                         newToDoTitle = taskName,
                         newToDoDate = taskDueDate
                     )
@@ -160,7 +163,7 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
             val deadlineDueDate = deadlineSelectDueDateEdit.text.toString().trim().substringAfter(":").trim()
             if (deadlineName.isNotEmpty()) {
 //                if(todayFragment != null){
-                    todayFragment?.viewModel?.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
+                    viewModel.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
 //                } else if (monthFragment != null){
 //                    monthFragment?.viewModel?.loadDeadline(deadlineName,deadlineDueDate,deadlineStartDate)
 //
@@ -208,7 +211,7 @@ class AddPlanDialog(private val todayFragment: TodayFragment? ,private val month
 
             if (scheduleName.isNotEmpty()) {
 //                if(todayFragment != null){
-                    todayFragment?.viewModel?.loadSchedule(
+                    viewModel.loadSchedule(
                         newScheduleTitle = scheduleName,
                         newScheduleLocation = scheduleLocation,
                         newScheduleDate = scheduleDate,

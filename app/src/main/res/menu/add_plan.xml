@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/menu_task"
-        android:title="@string/title_addTask" />
+        android:title="@string/title_addTodo" />
     <item
         android:id="@+id/menu_deadline"
         android:title="@string/title_addDeadline" />

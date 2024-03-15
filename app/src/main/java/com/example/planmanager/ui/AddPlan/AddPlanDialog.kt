@@ -51,7 +51,7 @@ class AddPlanDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())
-        builder.setTitle("Add TASK")
+        builder.setTitle("New Todo")
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_add_plan, null)
         val viewModel: TaskViewModel by viewModels()
@@ -79,8 +79,11 @@ class AddPlanDialog : DialogFragment() {
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
-        val initialDate = String.format("Date: %d-%02d-%d", year, month+1, day)
-        deadlineSelectStartDateEdit.setText(initialDate)
+
+        // setting default values
+        val initialDate = String.format("%d-%02d-%d", year, month+1, day)
+        deadlineSelectStartDateEdit.setText("Start from: " + initialDate)
+        taskSelectDateEdit.setText("Date: " + initialDate)
 
 //        <------------------------Calendar-------------------------------->
 
@@ -101,7 +104,7 @@ class AddPlanDialog : DialogFragment() {
             val taskName = taskname.text.toString().trim()
             val taskDueDate = taskSelectDateEdit.text.toString().trim().substringAfter(":").trim()
             if (taskName.isNotEmpty()) {
-                Log.d("LookAtHere", "Done button being hit, input is {$taskName}")
+//                Log.d("LookAtHere", "Done button being hit, input is {$taskName}")
 //                if(todayFragment != null){
                     viewModel.loadTodo(
                         newToDoTitle = taskName,
@@ -137,10 +140,10 @@ class AddPlanDialog : DialogFragment() {
                     updateBottomContentVisibility(it.position)
 
                     val title = when (it.position) {
-                        0 -> "Add TASK"
-                        1 -> "Add DEADLINE"
-                        2 -> "Add CALENDAR"
-                        else -> "Add PLAN"
+                        0 -> "New Todo"
+                        1 -> "New Deadline"
+                        2 -> "New Calendar"
+                        else -> "New Task"
                     }
                     dialog?.setTitle(title)
                 }
@@ -182,7 +185,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Date: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Start from: %d-%02d-%d", year, month+1, dayOfMonth)
                 deadlineSelectStartDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()
@@ -192,7 +195,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Date: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Due on: %d-%02d-%d", year, month+1, dayOfMonth)
                 deadlineSelectDueDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()

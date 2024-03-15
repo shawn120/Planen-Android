@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import java.util.Date
 import java.util.UUID
 
 @Entity
@@ -35,18 +37,20 @@ data class TaskItem(
     var timeSchedule: String? = null,
 ) {
     //    Deadline progress variable
-    val percentagePassed: Int
-        get() {
+    @Ignore
+    val percentagePassed: (Date?) -> Int = { date ->
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val currentDate = Calendar.getInstance().time
-            val startDateParsed = dateFormat.parse(startDateDeadline) ?: return 0
-            val deadlineDateParsed = dateFormat.parse(dateDeadline) ?: return 0
-
+            val startDateParsed = dateFormat.parse(startDateDeadline)
+            val deadlineDateParsed = dateFormat.parse(dateDeadline)
+            val curretDate = date?:Calendar.getInstance().time
             val totalDuration = deadlineDateParsed.time - startDateParsed.time
-            val passedDuration = currentDate.time - startDateParsed.time
+            val passedDuration = curretDate.time - startDateParsed.time
 
-            val percentage = passedDuration.toFloat() / totalDuration.toFloat()
-            return (String.format("%.2f", percentage).toFloat()*100).toInt()
+            var percentage = passedDuration.toFloat() / totalDuration.toFloat()
+            if (percentage < 0) {
+                percentage = 0F
+            }
+            (String.format("%.2f", percentage).toFloat()*100).toInt()
         }
     val taskType: TaskType
         get() {

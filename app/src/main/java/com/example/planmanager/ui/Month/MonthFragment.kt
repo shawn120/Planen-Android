@@ -1,51 +1,66 @@
 package com.example.planmanager.ui.Month
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
+import com.example.planmanager.data.TaskItem
 import com.example.planmanager.databinding.FragmentMonthBinding
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
+import com.example.planmanager.ui.TaskViewModel
+import com.example.planmanager.ui.Today.TodayAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthFragment : Fragment() {
+class MonthFragment : Fragment(R.layout.fragment_month) {
 
     private var _binding: FragmentMonthBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val adapter = TodayAdapter(::onTaskCardClick)
+    val viewModel: TaskViewModel by viewModels()
+    private lateinit var taskListRV: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val monthViewModel =
-            ViewModelProvider(this).get(MonthViewModel::class.java)
 
         _binding = FragmentMonthBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        taskListRV = view.findViewById(R.id.rv_task_list_on_day)
+        taskListRV.layoutManager = LinearLayoutManager(requireContext())
+        taskListRV.setHasFixedSize(true)
+        taskListRV.adapter = adapter
+
+
+        setupCalendar()
+
+        val monthViewModel = ViewModelProvider(this).get(MonthViewModel::class.java)
+
         val textView: TextView = binding.textMonth
+
         monthViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
-        setupCalendar()
-
-        return root
     }
 
     override fun onDestroyView() {
@@ -61,8 +76,15 @@ class MonthFragment : Fragment() {
 
         // Set the current date as the selected date in the CalendarView
         calendarView.setDate(currentDate.timeInMillis, false, true)
-
+        val textView: TextView = binding.textMonth
         // Handle date change event
+
+        // initial today's task
+        viewModel.taskItemLocalsToday.observe(viewLifecycleOwner){
+            adapter.updateTasks(it)
+            taskListRV.scrollToPosition(0)
+        }
+
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val selectedDate = Calendar.getInstance()
             selectedDate.set(year, month, dayOfMonth)
@@ -70,8 +92,20 @@ class MonthFragment : Fragment() {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val formattedDate = dateFormat.format(selectedDate.time)
 
-            val textView: TextView = binding.textMonth
+
             textView.text = formattedDate
+            val list = viewModel.getTaskOnDay(date = formattedDate)
+            list.observe(viewLifecycleOwner) {taskItemLocalsList ->
+                Log.d("LookAtHere", "today fragment new item: {$taskItemLocalsList}")
+                adapter.updateTasks(taskItemLocalsList)
+                taskListRV.scrollToPosition(0)
+            }
         }
+    }
+    private fun onTaskCardClick(task: TaskItem) {
+        Log.d("TODAYFRAGMENT", "${task.title} is being clicked")
+// input id into this dialog
+        val dialog = AddPlanDialog()
+        dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
 }

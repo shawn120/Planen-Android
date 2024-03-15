@@ -2,6 +2,7 @@ package com.example.planmanager.ui
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.planmanager.data.TaskItem
@@ -24,6 +25,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
+    fun getTaskOnDay(date:String) : LiveData<MutableList<TaskItem>?>{
+        val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()
+        return list
+    }
     fun loadDeadline(newDeadlineTitle: String, deadlineDate: String, startDate: String){
         if (!TextUtils.isEmpty(newDeadlineTitle) && !TextUtils.isEmpty(deadlineDate)) {
             val newTask = TaskItem(

@@ -14,7 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
+import com.example.planmanager.data.AppDatabase
 import com.example.planmanager.data.TaskItem
+import com.example.planmanager.data.TaskItemLocalRepository
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
@@ -33,7 +35,7 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
         taskListRV.adapter = adapter
 
         viewModel.taskItemLocalsToday.observe(viewLifecycleOwner) {taskItemLocalsList ->
-            Log.d("LookAtHere", "today fragment new item: {$taskItemLocalsList}")
+            Log.d("Today Fragment", "today fragment new item: {$taskItemLocalsList}")
             adapter.updateTasks(taskItemLocalsList)
             taskListRV.scrollToPosition(0)
         }
@@ -41,15 +43,9 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
     }
 
     private fun onTaskCardClick(task: TaskItem) {
-        // todo: implement later
-        return
-//        if (task.taskType ==TaskType.DEADLINE) {
-//            Log.d("TODOFRAGMENT", "a ${task.deadline?.title} is being clicked")
-//        } else {
-//            Log.d("TODOFRAGMENT", "a ${task.todo?.text} is being clicked")
-//        }
-
-//        val dialog = AddPlanDialog(this@TodayFragment)
-//        dialog.show(requireFragmentManager(), "add_plan_dialog")
+        Log.d("TODAYFRAGMENT", "${task.title} is being clicked")
+// input id into this dialog
+        val dialog = AddPlanDialog()
+        dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
 }

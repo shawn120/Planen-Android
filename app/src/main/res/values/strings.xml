@@ -5,12 +5,12 @@
     <string name="title_profile">Profile</string>
     <string name="title_addPlan">ADD PLAN</string>
 
-    <string name="title_addTask">Task</string>
+    <string name="title_addTodo">Todo</string>
 
     <string name="title_addDeadline">Deadline</string>
     <string name="title_addSchedule">Schedule</string>
 
-    <string name="edit_task"> Task : </string>
+    <string name="edit_task">Name : </string>
     <string name="edit_location">Location : </string>
     <string name="textview_selectDate"> Select Date </string>
     <string name="textview_Date"> Date :  </string>

@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.util.TaskType
+import java.util.Calendar
+import java.util.Date
 
 class TodayAdapter(
-    private val onTaskCardClick: (TaskItem) -> Unit
+    private val onTaskCardClick: (TaskItem) -> Unit,
+    val currentDate: Date? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var tasks: MutableList<TaskItem> = mutableListOf()
@@ -77,7 +80,7 @@ class TodayAdapter(
             is DeadlineViewHolder -> {
                 Log.d("LookatHere" , "DeadlineviewHolder{$taskItem}")
                 if (taskItem.taskType == TaskType.DEADLINE) {
-                    holder.bindDeadline(taskItem)
+                    holder.bindDeadline(taskItem, currentDate)
                 }
             }
             is TodoViewHolder -> {
@@ -110,18 +113,18 @@ class TodayAdapter(
         private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
         init{
             itemView.setOnClickListener {
-                // todo: implement later, maybe need different "onTaskCardClick" for three of them
-//                currentDeadline?.let(onClick)
+//                 todo: implement later, maybe need different "onTaskCardClick" for three of them
+                currentDeadline?.let(onClick)
 
             }
         }
 
-        fun bindDeadline(taskItem: TaskItem) {
+        fun bindDeadline(taskItem: TaskItem, currentDate: Date?) {
             currentDeadline = taskItem
             deadlineTV.text = taskItem.title
             deadlineDateTV.text = taskItem.dateDeadline
-            deadlineProgressPB.progress = taskItem.percentagePassed
-            deadlinePercentageTV.text = taskItem.percentagePassed.toString() + "%"
+            deadlineProgressPB.progress = taskItem.percentagePassed(currentDate)
+            deadlinePercentageTV.text = taskItem.percentagePassed(currentDate).toString() + "%"
             startDateTV.text = taskItem.startDateDeadline
             deadlineSubCard.visibility=View.VISIBLE
             todoSubCard.visibility=View.INVISIBLE
@@ -140,8 +143,8 @@ class TodayAdapter(
         private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
         init{
             itemView.setOnClickListener {
-                // todo: implement later, maybe need different "onTaskCardClick" for three of them
-//                currentTodo?.let(onClick)
+//                 todo: implement later, maybe need different "onTaskCardClick" for three of them
+                currentTodo?.let(onClick)
 
             }
         }
@@ -172,7 +175,7 @@ class TodayAdapter(
         init{
             itemView.setOnClickListener {
                 // todo: implement later, maybe need different "onTaskCardClick" for three of them
-//                currentSchedule?.let(onClick)
+                currentSchedule?.let(onClick)
 
             }
         }

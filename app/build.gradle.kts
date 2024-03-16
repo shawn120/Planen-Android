@@ -17,6 +17,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "web_client_1", properties["WEB_CLIENT_1"]?.toString() ?: "358827406368-u6uknvfvrh8lfalrae8biobjjp604igi.apps.googleusercontent.com")
     }
 
     buildTypes {
@@ -37,6 +39,10 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
 }
 
@@ -64,6 +70,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("androidx.credentials:credentials:1.3.0-alpha01") //google
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
+
+    implementation("androidx.compose.runtime:runtime:1.6.3")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.6.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

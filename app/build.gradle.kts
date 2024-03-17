@@ -91,6 +91,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
 
+    implementation("androidx.credentials:credentials:1.3.0-alpha01")
 
 
     implementation("androidx.cardview:cardview:1.0.0")

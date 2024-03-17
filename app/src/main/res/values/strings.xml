@@ -20,6 +20,10 @@
     <string name="textview_dueDate"> Due Date : </string>
 
     <string name="action_add_plan">Add Plan</string>
+
+    //google connection strings
+    <string name="Web_client_1">358827406368-u6uknvfvrh8lfalrae8biobjjp604igi.apps.googleusercontent.com</string>
+    <string name="andriod_client">358827406368-10f9a0jevh2ctbj1vi877fvj772n258i.apps.googleusercontent.com</string>
     
 
 

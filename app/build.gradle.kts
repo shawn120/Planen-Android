@@ -72,7 +72,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     //google
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     implementation("androidx.credentials:credentials:1.3.0-alpha01")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
     implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")

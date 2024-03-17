@@ -33,4 +33,8 @@
         android:name="com.example.planmanager.ui.Profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <action
+        android:id="@+id/action_loginFragment_to_profileFragment"
+        app:destination="@id/navigation_profile" />
 </navigation>

@@ -4,4 +4,10 @@
     <string name="title_month">Month</string>
     <string name="title_profile">Profile</string>
     <string name="title_login">Login</string>
+
+
+    //google connection strings
+    <string name="Web_client_1">358827406368-u6uknvfvrh8lfalrae8biobjjp604igi.apps.googleusercontent.com</string>
+    <string name="andriod_client">358827406368-10f9a0jevh2ctbj1vi877fvj772n258i.apps.googleusercontent.com</string>
+
 </resources>

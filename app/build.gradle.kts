@@ -67,14 +67,29 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
+    //google
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("androidx.credentials:credentials:1.3.0-alpha01") //google
+    implementation("androidx.credentials:credentials:1.3.0-alpha01")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
     implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")
 
+    //google calendar
+    implementation ("com.google.oauth-client:google-oauth-client-jetty:1.23.0")
+    implementation ("com.google.apis:google-api-services-calendar:v3-rev305-1.23.0")
+    implementation ("com.google.android.gms:play-services-auth:20.4.0")
+
+    //to avoid conflicts in libraries
+    implementation ("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
+    implementation("com.google.api-client:google-api-client-android:1.23.0") {
+        exclude(group = "org.apache.httpcomponents", module = "httpclient")
+    }
+
+    //easily control permissions
+    implementation ("pub.devrel:easypermissions:3.0.0")
 
     implementation("androidx.compose.runtime:runtime:1.6.3")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.3")

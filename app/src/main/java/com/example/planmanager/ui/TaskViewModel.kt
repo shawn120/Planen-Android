@@ -29,6 +29,13 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()
         return list
     }
+
+    fun deleteTask(task: TaskItem){
+        viewModelScope.launch {
+            repository.deleteTaskItem(task)
+        }
+    }
+
     fun loadDeadline(newDeadlineTitle: String, deadlineDate: String, startDate: String){
         if (!TextUtils.isEmpty(newDeadlineTitle) && !TextUtils.isEmpty(deadlineDate)) {
             val newTask = TaskItem(

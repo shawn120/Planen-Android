@@ -11,6 +11,7 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
@@ -20,6 +21,7 @@ import com.example.planmanager.data.TaskItemLocalRepository
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
+import com.google.android.material.snackbar.Snackbar
 
 class TodayFragment : Fragment(R.layout.fragment_today) {
     private val adapter = TodayAdapter(::onTaskCardClick)
@@ -39,6 +41,43 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             adapter.updateTasks(taskItemLocalsList)
             taskListRV.scrollToPosition(0)
         }
+
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition // int
+                val deletedItem = adapter.deleteTask(position)
+                val rootView = view.findViewById<View>(R.id.rv_task_list)
+                val snackbar = rootView?.let {
+                    Snackbar.make(
+                        it,
+                        "Delete \"${deletedItem.title}\" ?",
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+                snackbar?.setAction("Confirm") {
+                    viewModel.deleteTask(deletedItem)
+                }
+                snackbar?.addCallback(object : Snackbar.Callback() {
+                    override fun onShown(sb: Snackbar?) {
+                        adapter.addTask(deletedItem, position)
+                    }
+                })
+                snackbar?.show()
+            }
+        }
+
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(taskListRV)
 
     }
 

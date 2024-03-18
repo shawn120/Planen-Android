@@ -1,5 +1,6 @@
 package com.example.planmanager.ui.Today
 
+import android.accessibilityservice.AccessibilityService.TakeScreenshotCallback
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +33,11 @@ class TodayAdapter(
         tasks = newTasks?: mutableListOf()
         Log.d("Lookathere","update :${newTasks}")
         notifyItemRangeInserted(0, tasks.size)
+    }
+
+    fun addTask(newTask: TaskItem, position: Int = 0) {
+        tasks.add(position, newTask)
+        notifyItemInserted(position)
     }
 
     fun deleteTask(position: Int): TaskItem {

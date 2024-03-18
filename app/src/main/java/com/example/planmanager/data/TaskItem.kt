@@ -15,12 +15,13 @@ import java.util.UUID
 data class TaskItem(
     //    unique id
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val timeCreated: Long = System.currentTimeMillis(),
     //    Task type
     var isToDo: Boolean = false,
     var isDeadline: Boolean = false,
     var isSchedule: Boolean = false,
 
-    //    Universal entry: title
+    //    Universal entry: title, and first date
     var title: String? = null,
 
     //    To-Do
@@ -35,6 +36,9 @@ data class TaskItem(
     var locationSchedule: String? = null,
     var dateSchedule: String? = null,
     var timeSchedule: String? = null,
+
+    var universalDateUsingStartDate: String = dateToDo?:startDateDeadline?:dateSchedule?:"",
+    var universalDateUsingDeadlineDate: String = dateToDo?:dateDeadline?:dateSchedule?:"",
 ) {
     //    Deadline progress variable
     @Ignore
@@ -42,13 +46,16 @@ data class TaskItem(
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val startDateParsed = dateFormat.parse(startDateDeadline)
             val deadlineDateParsed = dateFormat.parse(dateDeadline)
-            val curretDate = date?:Calendar.getInstance().time
+            val curretDate = date?: Calendar.getInstance().time
             val totalDuration = deadlineDateParsed.time - startDateParsed.time
             val passedDuration = curretDate.time - startDateParsed.time
 
             var percentage = passedDuration.toFloat() / totalDuration.toFloat()
             if (percentage < 0) {
                 percentage = 0F
+            }
+            if (percentage > 1) {
+                percentage = 1F
             }
             (String.format("%.2f", percentage).toFloat()*100).toInt()
         }

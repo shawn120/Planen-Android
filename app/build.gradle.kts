@@ -65,6 +65,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.compose.ui:ui-android:1.6.3")
     ksp("androidx.room:room-compiler:2.6.1")
 
     //Navigation
@@ -94,6 +95,8 @@ dependencies {
     implementation("androidx.compose.runtime:runtime:1.6.3")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
     implementation("androidx.compose.runtime:runtime-rxjava2:1.6.3")
+    implementation ("androidx.compose.ui:ui:1.6.3")
+    implementation ("androidx.compose.material:material:1.6.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

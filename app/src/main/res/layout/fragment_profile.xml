@@ -26,6 +26,7 @@
 
     <!-- Button to trigger sign-in -->
 <!--    com.google.android.gms.common.SignInButton-->
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button"
         android:layout_width="wrap_content"

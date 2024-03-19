@@ -23,7 +23,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     val taskItemLocals = repository.getAllLocalTaskItem().asLiveData()
 
-    val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
+    val taskItemLocalsToday = repository.getAllLocalTaskItemToday(1, "date", "ASC").asLiveData()
 
     fun getTaskOnDay(date:String) : LiveData<MutableList<TaskItem>?>{
         val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()

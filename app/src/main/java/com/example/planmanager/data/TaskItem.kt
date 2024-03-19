@@ -8,8 +8,11 @@ import java.util.Locale
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.squareup.moshi.FromJson
 import java.util.Date
 import java.util.UUID
+import com.squareup.moshi.JsonClass
+import com.squareup.moshi.ToJson
 
 @Entity
 data class TaskItem(
@@ -73,3 +76,4 @@ data class TaskItem(
             return TaskType.NONE
         }
 }
+

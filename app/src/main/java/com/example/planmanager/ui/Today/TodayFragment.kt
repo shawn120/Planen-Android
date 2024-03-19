@@ -44,6 +44,11 @@ class TodayFragment : Fragment(R.layout.fragment_today){
             taskListRV.scrollToPosition(0)
         }
 
+        viewModel.loadHoliday(
+            "2024",
+            "US"
+        )
+
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
             0,
             ItemTouchHelper.LEFT

@@ -22,11 +22,14 @@ interface TaskItemDao {
     fun getAllLocalTasks() : Flow<MutableList<TaskItem>?>
 
     @Query("SELECT * FROM TaskItem WHERE " +
-            "(isDeadline = 1 AND startDateDeadline <= date('now','localtime') AND dateDeadline >= date('now','localtime'))" +
-            "OR (isToDo = 1 AND dateToDo <= date('now','localtime')) " +
-            "OR (isSchedule = 1 AND dateSchedule = date('now','localtime'))"+
-            "ORDER BY universalDateUsingStartDate DESC, timeCreated DESC")
-    fun getAllLocalTasksToday() : Flow<MutableList<TaskItem>?>
+            "(isDeadline = 1 AND startDateDeadline <= date('now','localtime','+ :range day') AND dateDeadline >= date('now','localtime'))" +
+            "OR (isToDo = 1 AND dateToDo <= date('now','localtime','+ :range day')) " +
+            "OR (isSchedule = 1 AND dateSchedule <= date('now','localtime','+ :range day'))" +
+            "ORDER BY CASE WHEN :sortBy = 'date' THEN universalDateUsingStartDate END " +
+            "CASE WHEN :sortOrder = 'ASC' THEN ASC ELSE DESC END, " +
+            "CASE WHEN :sortBy = 'created' THEN timeCreated END " +
+            "CASE WHEN :sortOrder = 'ASC' THEN ASC ELSE DESC END")
+    fun getAllLocalTasksToday(range: Int, sortBy: String, sortOrder: String) : Flow<MutableList<TaskItem>?>
 
     @Query("SELECT * FROM TaskItem WHERE " +
             "(isDeadline = 1 AND startDateDeadline <= :date AND dateDeadline >= :date)" +

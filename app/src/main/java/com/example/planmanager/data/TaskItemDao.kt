@@ -21,25 +21,12 @@ interface TaskItemDao {
     @Query("SELECT * FROM TaskItem")
     fun getAllLocalTasks() : Flow<MutableList<TaskItem>?>
 
-    @Query("""
-    SELECT * FROM TaskItem 
-    WHERE 
-        (isDeadline = 1 AND startDateDeadline <= date('now','localtime','+ :range day') AND dateDeadline >= date('now','localtime'))
-        OR (isToDo = 1 AND dateToDo <= date('now','localtime','+ :range day')) 
-        OR (isSchedule = 1 AND dateSchedule <= date('now','localtime','+ :range day'))
-    ORDER BY 
-        CASE 
-            WHEN :sortBy = 'date' THEN universalDateUsingStartDate
-            WHEN :sortBy = 'created' THEN timeCreated
-            ELSE universalDateUsingStartDate
-        END ASC, 
-        CASE 
-            WHEN :sortOrder = 'ASC' THEN universalDateUsingStartDate
-            WHEN :sortOrder = 'DESC' THEN timeCreated
-            ELSE universalDateUsingStartDate
-        END DESC
-""")
-    fun getAllLocalTasksToday(range: Int, sortBy: String, sortOrder: String): Flow<MutableList<TaskItem>?>
+    @Query("SELECT * FROM TaskItem WHERE " +
+            "(isDeadline = 1 AND startDateDeadline <= date('now','localtime','+ :range day') AND dateDeadline >= date('now','localtime')) " +
+            "OR (isToDo = 1 AND dateToDo <= date('now','localtime','+ :range day')) " +
+            "OR (isSchedule = 1 AND dateSchedule <= date('now','localtime','+ :range day')) " +
+            "ORDER BY universalDateUsingStartDate ASC, timeCreated ASC")
+    fun getAllLocalTasksToday(range: Int): Flow<MutableList<TaskItem>?>
 
 
     @Query("SELECT * FROM TaskItem WHERE " +

@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthFragment : Fragment(R.layout.fragment_month),TodayAdapter.OnTodoCheckboxChangedListener {
+class MonthFragment : Fragment(R.layout.fragment_month) {
 
     private var _binding: FragmentMonthBinding? = null
 
@@ -148,8 +148,8 @@ class MonthFragment : Fragment(R.layout.fragment_month),TodayAdapter.OnTodoCheck
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
-    override fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
-        Log.d("lookhere","month checkbox change-- $taskId")
+    private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("CHECKBOXCHANGE","month checkbox change-- $taskId")
         viewModel.updateTodoCompletion(taskId, isChecked)
     }
 }

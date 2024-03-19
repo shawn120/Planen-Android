@@ -164,8 +164,10 @@ class TodayAdapter(
 
                 if (currentTodo != null) {
                     val completed = isChecked
-                    val taskId = currentTodo?.id ?: return@setOnCheckedChangeListener
-                    onTodoCheckboxChanged(taskId, isChecked)
+                    val taskId = currentTodo?.id
+                    taskId?.let {
+                        onTodoCheckboxChanged(it, isChecked)
+                    }
                 }
             }
             itemView.setOnClickListener {
@@ -218,8 +220,5 @@ class TodayAdapter(
             scheduleSubCard.visibility=View.VISIBLE
 
         }
-    }
-    interface OnTodoCheckboxChangedListener {
-        fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean)
     }
 }

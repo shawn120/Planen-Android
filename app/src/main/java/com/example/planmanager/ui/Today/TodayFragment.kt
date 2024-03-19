@@ -24,7 +24,7 @@ import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
 import com.google.android.material.snackbar.Snackbar
 
-class TodayFragment : Fragment(R.layout.fragment_today), TodayAdapter.OnTodoCheckboxChangedListener{
+class TodayFragment : Fragment(R.layout.fragment_today){
     private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged )
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
@@ -90,9 +90,8 @@ class TodayFragment : Fragment(R.layout.fragment_today), TodayAdapter.OnTodoChec
         dialog.show(requireFragmentManager(), "add_plan_dialog")
     }
 
-    override fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
-        Log.d("lookhere","today checkbox change-- $taskId")
+    private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("CHECKBOXCHANGE","today checkbox change-- $taskId")
         viewModel.updateTodoCompletion(taskId, isChecked)
-
     }
 }

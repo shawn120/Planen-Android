@@ -39,10 +39,14 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.10"
+    }
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
     }
 }
 
@@ -81,13 +85,24 @@ dependencies {
     //google calendar
     implementation ("com.google.oauth-client:google-oauth-client-jetty:1.23.0")
     implementation ("com.google.apis:google-api-services-calendar:v3-rev305-1.23.0")
-    implementation ("com.google.android.gms:play-services-auth:20.4.0")
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
+    implementation ("com.google.api-client:google-api-client-gson:1.30.1")
+    implementation("com.google.code.gson:gson:2.10")
 
     //to avoid conflicts in libraries
     implementation ("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
     implementation("com.google.api-client:google-api-client-android:1.23.0") {
         exclude(group = "org.apache.httpcomponents", module = "httpclient")
     }
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+
+    //Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //easily control permissions
     implementation ("pub.devrel:easypermissions:3.0.0")
@@ -113,5 +128,6 @@ dependencies {
 
 
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }

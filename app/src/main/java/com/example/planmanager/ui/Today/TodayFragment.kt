@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.CheckBox
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
@@ -23,10 +24,11 @@ import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
 import com.google.android.material.snackbar.Snackbar
 
-class TodayFragment : Fragment(R.layout.fragment_today) {
-    private val adapter = TodayAdapter(::onTaskCardClick)
+class TodayFragment : Fragment(R.layout.fragment_today), TodayAdapter.OnTodoCheckboxChangedListener{
+    private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged )
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,5 +88,11 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 // input id into this dialog
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
+    }
+
+    override fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("lookhere","today checkbox change-- $taskId")
+        viewModel.updateTodoCompletion(taskId, isChecked)
+
     }
 }

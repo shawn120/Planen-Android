@@ -18,6 +18,9 @@ interface TaskItemDao {
     @Update
     suspend fun update(task: TaskItem)
 
+    @Query("SELECT * FROM TaskItem WHERE id = :taskId")
+    suspend fun getLocalTaskItem(taskId: String): TaskItem?
+
     @Query("SELECT * FROM TaskItem")
     fun getAllLocalTasks() : Flow<MutableList<TaskItem>?>
 

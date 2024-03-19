@@ -24,14 +24,14 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MonthFragment : Fragment(R.layout.fragment_month) {
+class MonthFragment : Fragment(R.layout.fragment_month),TodayAdapter.OnTodoCheckboxChangedListener {
 
     private var _binding: FragmentMonthBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val adapter = TodayAdapter(::onTaskCardClick)
+    private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
 
@@ -147,5 +147,9 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
 // input id into this dialog
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
+    }
+    override fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("lookhere","month checkbox change-- $taskId")
+        viewModel.updateTodoCompletion(taskId, isChecked)
     }
 }

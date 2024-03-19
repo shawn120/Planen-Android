@@ -11,6 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.planmanager.data.AppDatabase
 import com.example.planmanager.data.TaskItemLocalRepository
+import com.example.planmanager.util.TaskType
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : AndroidViewModel(application){
@@ -25,6 +26,15 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
+    fun updateTodoCompletion(taskId: String, completed: Boolean) {
+        viewModelScope.launch {
+            val taskItem = repository.getLocalTaskItem(taskId)
+            if (taskItem != null && taskItem.taskType == TaskType.TODO) {
+                taskItem.completedToDo = completed
+                repository.updateTaskItem(taskItem)
+            }
+        }
+    }
     fun getTaskOnDay(date:String) : LiveData<MutableList<TaskItem>?>{
         val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()
         return list
@@ -36,6 +46,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         }
     }
 
+    fun updateTask(task: TaskItem) {
+        viewModelScope.launch {
+            repository.updateTaskItem(task)
+        }
+    }
     fun loadDeadline(newDeadlineTitle: String, deadlineDate: String, startDate: String){
         if (!TextUtils.isEmpty(newDeadlineTitle) && !TextUtils.isEmpty(deadlineDate)) {
             val newTask = TaskItem(

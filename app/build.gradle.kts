@@ -87,7 +87,9 @@ dependencies {
     implementation ("com.google.apis:google-api-services-calendar:v3-rev305-1.23.0")
     implementation ("com.google.android.gms:play-services-auth:21.0.0")
     implementation ("com.google.api-client:google-api-client-gson:1.30.1")
-    implementation("com.google.code.gson:gson:2.10")
+    implementation ("com.google.code.gson:gson:2.10")
+
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //to avoid conflicts in libraries
     implementation ("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")

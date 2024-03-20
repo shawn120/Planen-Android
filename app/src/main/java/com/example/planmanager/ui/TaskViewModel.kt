@@ -18,13 +18,15 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     private var _taskItems = MutableLiveData<MutableList<TaskItem>?>(null)
     val taskItems: LiveData<MutableList<TaskItem>?> = _taskItems
+    private var taskUpdateListener: TaskUpdateListener? = null
     private val repository = TaskItemLocalRepository(
         AppDatabase.getInstance(application).taskItemDao()
     )
 
     val taskItemLocals = repository.getAllLocalTaskItem().asLiveData()
 
-    val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
+    var taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
+
 
     fun updateTodoCompletion(taskId: String, completed: Boolean) {
         viewModelScope.launch {
@@ -32,17 +34,23 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
             if (taskItem != null && taskItem.taskType == TaskType.TODO) {
                 taskItem.completedToDo = completed
                 repository.updateTaskItem(taskItem)
+
+                taskUpdateListener?.onTaskUpdateCompleted()
+                taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
             }
         }
     }
     fun getTaskOnDay(date:String) : LiveData<MutableList<TaskItem>?>{
-        val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()
-        return list
+        val onDaylist = repository.getAllLocalTaskItemOnDay(date).asLiveData()
+        Log.d("MonthFragment", "getTaskonday")
+        return onDaylist
     }
 
-    fun deleteTask(task: TaskItem){
+    fun deleteTask(task: TaskItem?){
         viewModelScope.launch {
-            repository.deleteTaskItem(task)
+            if (task != null) {
+                repository.deleteTaskItem(task)
+            }
         }
     }
 
@@ -79,6 +87,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
             isToDo = true,
             title = newToDoTitle,
             dateToDo = newToDoDate,
+
         )
         if (currentList == null) {
             currentList = mutableListOf(newTodo)
@@ -110,5 +119,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         viewModelScope.launch {
             repository.insertTaskItem(newScheduleTask)
         }
+    }
+    interface TaskUpdateListener {
+        fun onTaskUpdateCompleted()
+    }
+    fun setTaskUpdateListener(listener: TaskUpdateListener) {
+        taskUpdateListener = listener
     }
 }

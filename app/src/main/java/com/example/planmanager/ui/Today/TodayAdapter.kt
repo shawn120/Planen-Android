@@ -12,15 +12,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.util.TaskType
+import java.util.Calendar
 import java.util.Date
 
 class TodayAdapter(
     private val onTaskCardClick: (TaskItem) -> Unit,
-    private val onTodoCheckboxChanged: (String, Boolean) -> Unit,
-    val currentDate: Date? = null
+    private val onTodoCheckboxChanged: (String, Boolean) -> Unit
+//    var currentDate: Date? = null
 
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var currentDate: Date? = Calendar.getInstance().time
     private var tasks: MutableList<TaskItem> = mutableListOf()
 
     companion object {
@@ -29,7 +31,10 @@ class TodayAdapter(
         private const val VIEW_TYPE_SCHEDULE = 2
     }
 
-
+    fun setCurrentDate(date: Date?) {
+        currentDate = date
+        notifyDataSetChanged() // Notify adapter of data set change
+    }
     fun clearTasks(){
         tasks.clear()
     }
@@ -97,7 +102,7 @@ class TodayAdapter(
             is DeadlineViewHolder -> {
                 Log.d("LookatHere" , "DeadlineviewHolder{$taskItem}")
                 if (taskItem.taskType == TaskType.DEADLINE) {
-                    holder.bindDeadline(taskItem, currentDate)
+                    holder.bindDeadline(taskItem)
                 }
 
             }
@@ -137,16 +142,27 @@ class TodayAdapter(
             }
         }
 
-        fun bindDeadline(taskItem: TaskItem, currentDate: Date?) {
+        fun bindDeadline(taskItem: TaskItem) {
             currentDeadline = taskItem
             deadlineTV.text = taskItem.title
             deadlineDateTV.text = taskItem.dateDeadline
-            deadlineProgressPB.progress = taskItem.percentagePassed(currentDate)
-            deadlinePercentageTV.text = taskItem.percentagePassed(currentDate).toString() + "%"
+//            deadlineProgressPB.progress = taskItem.percentagePassed(currentDate)
+//            deadlinePercentageTV.text = taskItem.percentagePassed(currentDate).toString() + "%"
             startDateTV.text = taskItem.startDateDeadline
             deadlineSubCard.visibility=View.VISIBLE
             todoSubCard.visibility=View.INVISIBLE
             scheduleSubCard.visibility=View.INVISIBLE
+
+            Log.d("deadlineselect", "bindDeadline : $currentDate")
+            taskItem.updateCurrentDate(currentDate)
+            updateProgress(taskItem)
+
+        }
+        private fun updateProgress(taskItem: TaskItem) {
+            Log.d("deadlineselect", "update progress: $currentDate")
+            val progress = taskItem.percentagePassed(currentDate)
+            deadlineProgressPB.progress = progress
+            deadlinePercentageTV.text = "$progress%"
         }
     }
     inner class TodoViewHolder(

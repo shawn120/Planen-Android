@@ -1,6 +1,7 @@
 package com.example.planmanager.data
 
 
+import android.util.Log
 import com.example.planmanager.util.TaskType
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -42,26 +43,44 @@ data class TaskItem(
 
     var universalDateUsingStartDate: String = dateToDo?:startDateDeadline?:dateSchedule?:"",
     var universalDateUsingDeadlineDate: String = dateToDo?:dateDeadline?:dateSchedule?:"",
+
+
+//    var currentUpdateDate: Date? = null
 ) {
+    @Ignore
     //    Deadline progress variable
+    var currentUpdateDate: Date? = Calendar.getInstance().time
+
+    @Ignore
+    fun updateCurrentDate(date: Date?) {
+        currentUpdateDate = date
+        Log.d("deadlineselect", "updateCurrentDate : $currentUpdateDate")
+    }
+
     @Ignore
     val percentagePassed: (Date?) -> Int = { date ->
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val startDateParsed = dateFormat.parse(startDateDeadline)
             val deadlineDateParsed = dateFormat.parse(dateDeadline)
-            val curretDate = date?: Calendar.getInstance().time
+            val currentDate = currentUpdateDate
             val totalDuration = deadlineDateParsed.time - startDateParsed.time
-            val passedDuration = curretDate.time - startDateParsed.time
 
-            var percentage = passedDuration.toFloat() / totalDuration.toFloat()
+            val passedDuration = currentDate?.time?.minus(startDateParsed.time)
+
+            var percentage = passedDuration?.toFloat()?.div(totalDuration.toFloat())
+        if (percentage != null) {
             if (percentage < 0) {
                 percentage = 0F
             }
+        }
+        if (percentage != null) {
             if (percentage > 1) {
                 percentage = 1F
             }
+        }
             (String.format("%.2f", percentage).toFloat()*100).toInt()
         }
+
     val taskType: TaskType
         get() {
             if (isToDo){

@@ -32,6 +32,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
     private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
+    private var selectedDate: Date? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,6 +76,9 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
         // Get the current date
         val currentDate = Calendar.getInstance()
 
+        val currentDate_: Date = Calendar.getInstance().time
+        adapter.setCurrentDate(currentDate_)
+
         // Set the current date as the selected date in the CalendarView
         calendarView.setDate(currentDate.timeInMillis, false, true)
         val textView: TextView = binding.textMonth
@@ -87,11 +91,16 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
         }
 
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            val selectedDate = Calendar.getInstance()
-            selectedDate.set(year, month, dayOfMonth)
+            val selectedCalendar = Calendar.getInstance()
+            selectedCalendar.set(year, month, dayOfMonth)
+            selectedDate = selectedCalendar.time
+            Log.d("deadlineselect","selectedDate: $selectedDate")
+
+
+            adapter.setCurrentDate(selectedDate)
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-            val formattedDate = dateFormat.format(selectedDate.time)
+            val formattedDate = dateFormat.format(selectedCalendar.time)
 
 
             textView.text = formattedDate
@@ -101,6 +110,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
                 adapter.updateTasks(taskItemLocalsList)
                 taskListRV.scrollToPosition(0)
             }
+
         }
 
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(

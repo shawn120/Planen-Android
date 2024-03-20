@@ -21,6 +21,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     private var _taskItems = MutableLiveData<MutableList<TaskItem>?>(null)
     val taskItems: LiveData<MutableList<TaskItem>?> = _taskItems
+    private var taskUpdateListener: TaskUpdateListener? = null
     private val repository = TaskItemLocalRepository(
         AppDatabase.getInstance(application).taskItemDao()
     )
@@ -29,7 +30,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     val taskItemLocals = repository.getAllLocalTaskItem().asLiveData()
 
-    val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
+    var taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
     private val _apiError = MutableLiveData<Throwable?>(null)
     val apiError : LiveData<Throwable?> = _apiError
@@ -62,6 +63,9 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
             if (taskItem != null && taskItem.taskType == TaskType.TODO) {
                 taskItem.completedToDo = completed
                 repository.updateTaskItem(taskItem)
+
+                taskUpdateListener?.onTaskUpdateCompleted()
+                taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
             }
         }
     }
@@ -123,6 +127,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
             isToDo = true,
             title = newToDoTitle,
             dateToDo = newToDoDate,
+
         )
         if (currentList == null) {
             currentList = mutableListOf(newTodo)
@@ -154,5 +159,11 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         viewModelScope.launch {
             repository.insertTaskItem(newScheduleTask)
         }
+    }
+    interface TaskUpdateListener {
+        fun onTaskUpdateCompleted()
+    }
+    fun setTaskUpdateListener(listener: TaskUpdateListener) {
+        taskUpdateListener = listener
     }
 }

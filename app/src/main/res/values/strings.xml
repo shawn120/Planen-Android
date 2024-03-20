@@ -4,6 +4,7 @@
     <string name="title_month">Month</string>
     <string name="title_profile">Profile</string>
     <string name="title_addPlan">ADD PLAN</string>
+    <string name="title_user_pref">Settings</string>
 
     <string name="title_addTodo">Todo</string>
 
@@ -22,6 +23,23 @@
     <string name="action_add_plan">Add Plan</string>
     <string name="action_share">Share</string>
 
+    //user pref strings
+    <string name="pref_zero_day"> Today </string>
+    <string name="pref_one_day"> Today and tomorrow </string>
+    <string name="pref_two_day"> Next two days </string>
+    <string name="pref_three_day"> Next three days </string>
+
+    //values
+    <string name="pref_zero_day_value" translatable="false">+0 day</string>
+    <string name="pref_one_day_value" translatable="false">+1 day</string>
+    <string name="pref_two_day_value" translatable="false">+2 day</string>
+    <string name="pref_three_day_value" translatable="false">+3 day</string>
+
+    //user pref store
+    <string name="pref_category">Settings </string>
+    <string name="pref_key">false</string>
+    <string name="pref_title">View Settings</string>
+    <string name="pref_default_value">@string/pref_zero_day_value</string>
 
     //google connection strings
     <string name="Web_client_1">358827406368-bjrd4tkv7f2cc9orqjp1kcop9376o320.apps.googleusercontent.com</string>

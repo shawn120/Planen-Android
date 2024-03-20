@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="pref_days">
+        <item>@string/pref_zero_day</item>
+        <item>@string/pref_one_day</item>
+        <item>@string/pref_two_day</item>
+        <item>@string/pref_three_day</item>
+    </string-array>
+
+    <string-array name="pref_values">
+        <item>@string/pref_zero_day_value</item>
+        <item>@string/pref_one_day_value</item>
+        <item>@string/pref_two_day_value</item>
+        <item>@string/pref_three_day_value</item>
+    </string-array>
+</resources>

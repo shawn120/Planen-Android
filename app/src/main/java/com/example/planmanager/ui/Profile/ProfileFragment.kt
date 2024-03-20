@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import com.example.planmanager.R
 import com.example.planmanager.databinding.FragmentProfileBinding
 import android.content.Intent
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,16 +30,40 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+
 
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var binding: FragmentProfileBinding? = null
+    private var _binding: FragmentProfileBinding? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        val profileViewModel =
+            ViewModelProvider(this).get(ProfileViewModel::class.java)
+
+        binding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_profile, container, false
+        )
+
+        return binding!!.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_profile)
+
+        //binding = DataBindingUtil.setContentView(requireActivity(), R.layout.fragment_profile)
 
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestScopes(Scope("https://www.googleapis.com/auth/admin.directory.resource.calendar"))

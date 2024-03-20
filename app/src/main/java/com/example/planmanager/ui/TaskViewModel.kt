@@ -10,7 +10,11 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.planmanager.data.AppDatabase
+import com.example.planmanager.data.HolidayItem
+import com.example.planmanager.data.HolidayRepository
+import com.example.planmanager.data.HolidayService
 import com.example.planmanager.data.TaskItemLocalRepository
+import com.example.planmanager.util.TaskType
 import kotlinx.coroutines.launch
 
 class TaskViewModel(application: Application) : AndroidViewModel(application){
@@ -21,10 +25,46 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         AppDatabase.getInstance(application).taskItemDao()
     )
 
+    private val holidayRepository = HolidayRepository(HolidayService.create())
+
     val taskItemLocals = repository.getAllLocalTaskItem().asLiveData()
 
     val taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
+    private val _apiError = MutableLiveData<Throwable?>(null)
+    val apiError : LiveData<Throwable?> = _apiError
+
+    private val _apiResult = MutableLiveData<MutableList<HolidayItem>?>(null)
+    val apiResult: LiveData<MutableList<HolidayItem>?> = _apiResult
+
+    fun updateHoliday(holidays: MutableList<HolidayItem>) {
+        for (holiday in holidays) {
+            val holidayName = holiday.name
+            Log.d("getTASK", "$holidayName")
+            viewModelScope.launch {
+                val taskItem = repository.getLocalTaskItemByName(holidayName)
+                Log.d("getTASK", "$taskItem")
+                if (taskItem == null){
+                    loadSchedule(
+                        holiday.name,
+                        "Holiday",
+                        holiday.date,
+                        ""
+                    )
+                }
+            }
+        }
+
+    }
+    fun updateTodoCompletion(taskId: String, completed: Boolean) {
+        viewModelScope.launch {
+            val taskItem = repository.getLocalTaskItem(taskId)
+            if (taskItem != null && taskItem.taskType == TaskType.TODO) {
+                taskItem.completedToDo = completed
+                repository.updateTaskItem(taskItem)
+            }
+        }
+    }
     fun getTaskOnDay(date:String) : LiveData<MutableList<TaskItem>?>{
         val list = repository.getAllLocalTaskItemOnDay(date).asLiveData()
         return list
@@ -33,6 +73,25 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
     fun deleteTask(task: TaskItem){
         viewModelScope.launch {
             repository.deleteTaskItem(task)
+        }
+    }
+
+    fun updateTask(task: TaskItem) {
+        viewModelScope.launch {
+            repository.updateTaskItem(task)
+        }
+    }
+
+    fun loadHoliday(
+        year: String,
+        countryCode: String
+    ) {
+        viewModelScope.launch{
+            val result = holidayRepository.loadHoliday(year, countryCode)
+            _apiError.value = result.exceptionOrNull()
+            _apiResult.value = result.getOrNull()?.toMutableList()
+            Log.d("APIinViewModel", "${_apiError.value}")
+            Log.d("APIinViewModel", "${_apiResult.value}")
         }
     }
 

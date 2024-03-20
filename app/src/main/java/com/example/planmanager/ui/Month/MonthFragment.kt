@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,6 @@ import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.ui.Today.TodayAdapter
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,7 +29,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val adapter = TodayAdapter(::onTaskCardClick)
+    private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
 
@@ -133,7 +131,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
                 }
                 snackbar?.addCallback(object : Snackbar.Callback() {
                     override fun onShown(sb: Snackbar?) {
-                        adapter.addTask(deletedItem, position)
+                        adapter.addTaskBackToListOnly(deletedItem, position)
                     }
                 })
                 snackbar?.show()
@@ -147,5 +145,9 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
 // input id into this dialog
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
+    }
+    private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("CHECKBOXCHANGE","month checkbox change-- $taskId")
+        viewModel.updateTodoCompletion(taskId, isChecked)
     }
 }

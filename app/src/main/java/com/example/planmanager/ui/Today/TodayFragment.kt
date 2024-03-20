@@ -145,11 +145,13 @@ class TodayFragment : Fragment(R.layout.fragment_today){
                     }
                     TaskType.SCHEDULE -> {
                         val scheduleTask = task
-                        shareText.append("  Schedule: ${scheduleTask.dateSchedule} ${scheduleTask.timeSchedule}\n")
+                        shareText.append("  Date: ${scheduleTask.dateSchedule} \n")
+                        shareText.append("  Time: ${scheduleTask.timeSchedule}\n")
                         shareText.append("  Location: ${scheduleTask.locationSchedule}\n\n")
                     }
                     TaskType.TODO -> {
                         val todoTask = task
+                        shareText.append("  Date: ${todoTask.dateToDo}\n")
                         shareText.append("  Status: ${if (todoTask.completedToDo == true) "Completed" else "Incomplete"}\n\n")
                     }
 
@@ -169,17 +171,5 @@ class TodayFragment : Fragment(R.layout.fragment_today){
                 Snackbar.make(rootView, "No tasks to share", Snackbar.LENGTH_SHORT).show()
             }
         }
-//        val url = "https://api.openweathermap.org/data/2.5/weather?q=${tvLocation.text}"
-//        val shareText = getString(
-//            R.string.share_text,
-//            tvLocation.text.toString(),
-//            url
-//        )
-//        val intent: Intent = Intent().apply {
-//            action = Intent.ACTION_SEND
-//            putExtra(Intent.EXTRA_TEXT, shareText)
-//            type = "text/plain"
-//        }
-//        startActivity(Intent.createChooser(intent, null))
     }
 }

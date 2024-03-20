@@ -37,14 +37,18 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     var taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
-    var value = prefs.getString(
-        getApplication<Application>().getString(R.string.pref_key),
-        getApplication<Application>().getString(R.string.pref_default_value)
+    var range = prefs.getString(
+        getApplication<Application>().getString(R.string.pref_range_key),
+        getApplication<Application>().getString(R.string.pref_range_default_value)
     )
 
     var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
-        getApplication<Application>().getString(R.string.pref_key)
+        range?:"+0 day"
     ).asLiveData()
+
+//    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
+//        "+0 day"
+//    ).asLiveData()
 
 
     private val _apiError = MutableLiveData<Throwable?>(null)

@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_pref"
-        android:icon="@drawable/outline_app_settings_alt_24"
+        android:icon="@drawable/baseline_settings_24"
         android:title="@string/title_user_pref"
         app:showAsAction="ifRoom" />
 

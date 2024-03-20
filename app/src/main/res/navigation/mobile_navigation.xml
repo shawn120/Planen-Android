@@ -26,7 +26,7 @@
     <fragment
         android:id="@+id/navigation_user_pref"
         android:label="@string/title_user_pref"
-        android:name="com.example.planmanager.ui.UserPref.userPrefFragment" />
+        android:name="com.example.planmanager.ui.UserPref.PrefFragment" />
 
     <action
         android:id="@+id/navigate_to_user_pref"

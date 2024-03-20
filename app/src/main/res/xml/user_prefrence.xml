@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.preference.PreferenceScreen
+<PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory android:title="@string/pref_category">
+    <ListPreference
+        android:title="@string/pref_range_title"
+        android:key="@string/pref_range_key"
+        android:entries = "@array/pref_range_entries"
+        android:entryValues="@array/pref_range_values"
+        android:defaultValue="@string/pref_range_default_value"
+        android:dialogTitle="@string/pref_range_title"
+        app:useSimpleSummaryProvider="true"/>
 
-        <ListPreference
-            android:key="@string/pref_key"
-            android:title="@string/pref_title"
-            android:entries="@array/pref_days"
-            android:entryValues="@array/pref_values"
-            android:defaultValue="@string/pref_default_value"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
-
-</androidx.preference.PreferenceScreen>
+</PreferenceScreen>

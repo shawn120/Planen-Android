@@ -37,9 +37,9 @@
 
     //user pref store
     <string name="pref_category">Settings </string>
-    <string name="pref_key">false</string>
-    <string name="pref_title">View Settings</string>
-    <string name="pref_default_value">@string/pref_zero_day_value</string>
+    <string name="pref_range_key">range</string>
+    <string name="pref_range_title">Hightlight display range</string>
+    <string name="pref_range_default_value">@string/pref_zero_day_value</string>
 
     //google connection strings
     <string name="Web_client_1">358827406368-bjrd4tkv7f2cc9orqjp1kcop9376o320.apps.googleusercontent.com</string>

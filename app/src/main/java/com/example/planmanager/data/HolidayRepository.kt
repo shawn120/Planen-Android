@@ -20,6 +20,7 @@ class HolidayRepository (
                     Log.d("APIAPIAPI", "${response.body()}")
                     Result.success(response.body())
                 } else {
+                    Log.d("APIAPIAPI", "false")
                     Result.failure(Exception(response.errorBody()?.string()))
                 }
             } catch (e: Exception) {

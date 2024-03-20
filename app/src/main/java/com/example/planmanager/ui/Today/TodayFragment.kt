@@ -1,10 +1,17 @@
 package com.example.planmanager.ui.Today
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +19,7 @@ import com.example.planmanager.R
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
+import com.example.planmanager.util.TaskType
 import com.google.android.material.snackbar.Snackbar
 import java.util.UUID
 
@@ -40,6 +48,7 @@ class TodayFragment : Fragment(R.layout.fragment_today){
         )
 
         viewModel.apiResult.observe(viewLifecycleOwner) { holidays ->
+            Log.d("HOLIDAY", "insideHOLIDAY: $holidays")
             if (holidays != null) {
                 viewModel.updateHoliday(holidays)
             }
@@ -82,6 +91,28 @@ class TodayFragment : Fragment(R.layout.fragment_today){
             }
         }
 
+        val menuHost: MenuHost = requireActivity()
+        menuHost.addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.activity_main_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+
+                        R.id.action_share -> {
+                            shareTask()
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            viewLifecycleOwner,
+            Lifecycle.State.STARTED
+        )
+
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(taskListRV)
 
     }
@@ -96,5 +127,59 @@ class TodayFragment : Fragment(R.layout.fragment_today){
     private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
         Log.d("CHECKBOXCHANGE","today checkbox change-- $taskId")
         viewModel.updateTodoCompletion(taskId, isChecked)
+    }
+
+    fun shareTask() {
+        val taskItems = viewModel.taskItemLocalsToday.value
+        if (taskItems != null && taskItems.isNotEmpty()) {
+            val shareText = StringBuilder()
+            shareText.append("My Tasks for Today:\n")
+
+            for (task in taskItems) {
+                shareText.append("• ${task.title}\n")
+                when (task.taskType) {
+                    TaskType.DEADLINE -> {
+                        val deadlineTask = task
+                        shareText.append("  Start Date: ${deadlineTask.startDateDeadline}\n")
+                        shareText.append("  End Date: ${deadlineTask.dateDeadline}\n\n")
+                    }
+                    TaskType.SCHEDULE -> {
+                        val scheduleTask = task
+                        shareText.append("  Schedule: ${scheduleTask.dateSchedule} ${scheduleTask.timeSchedule}\n")
+                        shareText.append("  Location: ${scheduleTask.locationSchedule}\n\n")
+                    }
+                    TaskType.TODO -> {
+                        val todoTask = task
+                        shareText.append("  Status: ${if (todoTask.completedToDo == true) "Completed" else "Incomplete"}\n\n")
+                    }
+
+                    else -> {}
+                }
+            }
+
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, shareText.toString())
+                type = "text/plain"
+            }
+
+            startActivity(Intent.createChooser(intent, "Share via"))
+        } else {
+            view?.let { rootView ->
+                Snackbar.make(rootView, "No tasks to share", Snackbar.LENGTH_SHORT).show()
+            }
+        }
+//        val url = "https://api.openweathermap.org/data/2.5/weather?q=${tvLocation.text}"
+//        val shareText = getString(
+//            R.string.share_text,
+//            tvLocation.text.toString(),
+//            url
+//        )
+//        val intent: Intent = Intent().apply {
+//            action = Intent.ACTION_SEND
+//            putExtra(Intent.EXTRA_TEXT, shareText)
+//            type = "text/plain"
+//        }
+//        startActivity(Intent.createChooser(intent, null))
     }
 }

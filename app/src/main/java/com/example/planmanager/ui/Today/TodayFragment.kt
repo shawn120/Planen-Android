@@ -145,6 +145,11 @@ class TodayFragment : Fragment(R.layout.fragment_today){
                     }
                     TaskType.SCHEDULE -> {
                         val scheduleTask = task
+//                        val timeParts = scheduleTask.timeSchedule?.split(":")
+//                        val hour = timeParts?.get(0)?.toIntOrNull() ?: 0
+//                        val minute = timeParts?.getOrNull(1)?.toIntOrNull() ?: 0
+//                        val formattedTime = String.format("%02d:%02d", hour, minute)
+
                         shareText.append("  Date: ${scheduleTask.dateSchedule} \n")
                         shareText.append("  Time: ${scheduleTask.timeSchedule}\n")
                         shareText.append("  Location: ${scheduleTask.locationSchedule}\n\n")

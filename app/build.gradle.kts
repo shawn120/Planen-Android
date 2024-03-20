@@ -17,6 +17,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        resValue("string", "web_client_1", properties["WEB_CLIENT_1"]?.toString() ?: "358827406368-u6uknvfvrh8lfalrae8biobjjp604igi.apps.googleusercontent.com")
     }
 
     buildTypes {
@@ -37,6 +39,14 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.10"
+    }
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
     }
 }
 
@@ -59,10 +69,46 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.compose.ui:ui-android:1.6.3")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    //Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    //google
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+    implementation("androidx.credentials:credentials:1.3.0-alpha01")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0-alpha01")
+    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.0")
+
+    //google calendar
+    implementation ("com.google.oauth-client:google-oauth-client-jetty:1.23.0")
+    implementation ("com.google.apis:google-api-services-calendar:v3-rev305-1.23.0")
+    implementation ("com.google.android.gms:play-services-auth:21.0.0")
+    implementation ("com.google.api-client:google-api-client-gson:1.30.1")
+    implementation("com.google.code.gson:gson:2.10")
+
+    //to avoid conflicts in libraries
+    implementation ("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
+    implementation("com.google.api-client:google-api-client-android:1.23.0") {
+        exclude(group = "org.apache.httpcomponents", module = "httpclient")
+    }
+
+    //Glide
+    implementation("com.github.bumptech.glide:glide:4.14.2")
+
+
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    //easily control permissions
+    implementation ("pub.devrel:easypermissions:3.0.0")
+
+    implementation("androidx.compose.runtime:runtime:1.6.3")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.6.3")
+    implementation ("androidx.compose.ui:ui:1.6.3")
+    implementation ("androidx.compose.material:material:1.6.3")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -74,11 +120,13 @@ dependencies {
     ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     ksp("androidx.room:room-compiler:2.6.1")
 
+    implementation("androidx.credentials:credentials:1.3.0-alpha01")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
     implementation("androidx.cardview:cardview:1.0.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
 }

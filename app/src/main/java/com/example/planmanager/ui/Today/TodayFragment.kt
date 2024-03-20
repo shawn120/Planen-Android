@@ -2,27 +2,21 @@ package com.example.planmanager.ui.Today
 
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
-import com.example.planmanager.data.AppDatabase
 import com.example.planmanager.data.TaskItem
-import com.example.planmanager.data.TaskItemLocalRepository
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
-import com.example.planmanager.util.TaskType
+import com.google.android.material.snackbar.Snackbar
+import java.util.UUID
 
-class TodayFragment : Fragment(R.layout.fragment_today) {
-    private val adapter = TodayAdapter(::onTaskCardClick)
+class TodayFragment : Fragment(R.layout.fragment_today){
+    private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged )
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
 
@@ -40,6 +34,56 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
             taskListRV.scrollToPosition(0)
         }
 
+        viewModel.loadHoliday(
+            "2024",
+            "US"
+        )
+
+        viewModel.apiResult.observe(viewLifecycleOwner) { holidays ->
+            if (holidays != null) {
+                viewModel.updateHoliday(holidays)
+            }
+                taskListRV.scrollToPosition(0)
+        }
+
+
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition // int
+                val deletedItem = adapter.deleteTask(position)
+                val rootView = view.findViewById<View>(R.id.rv_task_list)
+                val snackbar = rootView?.let {
+                    Snackbar.make(
+                        it,
+                        "Delete \"${deletedItem.title}\" ?",
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+                snackbar?.setAction("Confirm") {
+                    viewModel.deleteTask(deletedItem)
+                }
+                snackbar?.addCallback(object : Snackbar.Callback() {
+                    override fun onShown(sb: Snackbar?) {
+                        adapter.addTaskBackToListOnly(deletedItem, position)
+                    }
+                })
+                snackbar?.show()
+            }
+        }
+
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(taskListRV)
+
     }
 
     private fun onTaskCardClick(task: TaskItem) {
@@ -47,5 +91,10 @@ class TodayFragment : Fragment(R.layout.fragment_today) {
 // input id into this dialog
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
+    }
+
+    private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("CHECKBOXCHANGE","today checkbox change-- $taskId")
+        viewModel.updateTodoCompletion(taskId, isChecked)
     }
 }

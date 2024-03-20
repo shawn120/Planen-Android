@@ -81,7 +81,7 @@ class AddPlanDialog : DialogFragment() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
         // setting default values
-        val initialDate = String.format("%d-%02d-%d", year, month+1, day)
+        val initialDate = String.format("%d-%02d-%02d", year, month+1, day)
         deadlineSelectStartDateEdit.setText("Start from: " + initialDate)
         taskSelectDateEdit.setText("Date: " + initialDate)
 
@@ -127,7 +127,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Date: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Date: %d-%02d-%02d", year, month+1, dayOfMonth)
                 taskSelectDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()
@@ -185,7 +185,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Start from: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Start from: %d-%02d-%02d", year, month+1, dayOfMonth)
                 deadlineSelectStartDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()
@@ -195,7 +195,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Due on: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Due on: %d-%02d-%02d", year, month+1, dayOfMonth)
                 deadlineSelectDueDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()
@@ -240,7 +240,7 @@ class AddPlanDialog : DialogFragment() {
             val datePickerDialog = DatePickerDialog(requireContext())
 
             datePickerDialog.setOnDateSetListener { dialogView, year, month, dayOfMonth ->
-                val selectedDate = String.format("Date: %d-%02d-%d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("Date: %d-%02d-%02d", year, month+1, dayOfMonth)
                 scheduleSelectDateEdit.setText(selectedDate)
             }
             datePickerDialog.show()

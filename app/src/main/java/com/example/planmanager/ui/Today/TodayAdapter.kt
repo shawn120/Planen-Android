@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -11,12 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.TaskItem
 import com.example.planmanager.util.TaskType
-import java.util.Calendar
 import java.util.Date
 
 class TodayAdapter(
     private val onTaskCardClick: (TaskItem) -> Unit,
+    private val onTodoCheckboxChanged: (String, Boolean) -> Unit,
     val currentDate: Date? = null
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var tasks: MutableList<TaskItem> = mutableListOf()
@@ -27,11 +29,26 @@ class TodayAdapter(
         private const val VIEW_TYPE_SCHEDULE = 2
     }
 
+
+    fun clearTasks(){
+        tasks.clear()
+    }
     fun updateTasks(newTasks: MutableList<TaskItem>?) {
         notifyItemRangeRemoved(0, tasks.size)
         tasks = newTasks?: mutableListOf()
         Log.d("Lookathere","update :${newTasks}")
         notifyItemRangeInserted(0, tasks.size)
+    }
+
+    fun addTaskBackToListOnly(newTask: TaskItem, position: Int = 0) {
+        tasks.add(position, newTask)
+        notifyItemInserted(position)
+    }
+
+    fun updateTask(position: Int): TaskItem {
+        val task = tasks[position]
+        notifyItemChanged(position)
+        return task
     }
 
     fun deleteTask(position: Int): TaskItem {
@@ -82,6 +99,7 @@ class TodayAdapter(
                 if (taskItem.taskType == TaskType.DEADLINE) {
                     holder.bindDeadline(taskItem, currentDate)
                 }
+
             }
             is TodoViewHolder -> {
                 if (taskItem.taskType == TaskType.TODO) {
@@ -141,7 +159,19 @@ class TodayAdapter(
         private var deadlineSubCard: ConstraintLayout = view.findViewById(R.id.ddl_sub_card)
         private var todoSubCard: ConstraintLayout = view.findViewById(R.id.todo_sub_card)
         private var scheduleSubCard: ConstraintLayout = view.findViewById(R.id.schedule_sub_card)
+        private var todoCheckbox: CheckBox = view.findViewById(R.id.todo_checkbox)
         init{
+            todoCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                currentTodo?.completedToDo = isChecked
+
+                if (currentTodo != null) {
+                    val completed = isChecked
+                    val taskId = currentTodo?.id
+                    taskId?.let {
+                        onTodoCheckboxChanged(it, isChecked)
+                    }
+                }
+            }
             itemView.setOnClickListener {
 //                 todo: implement later, maybe need different "onTaskCardClick" for three of them
                 currentTodo?.let(onClick)
@@ -157,6 +187,28 @@ class TodayAdapter(
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.VISIBLE
             scheduleSubCard.visibility=View.INVISIBLE
+
+            todoCheckbox.setOnCheckedChangeListener(null)
+
+            todoCheckbox.isChecked = taskItem.completedToDo == true
+            todoCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                currentTodo?.completedToDo = isChecked
+
+                if (currentTodo != null) {
+                    val taskId = currentTodo?.id
+                    taskId?.let {
+                        onTodoCheckboxChanged(it, isChecked)
+                    }
+                }
+            }
+//            todoCheckbox.isChecked = taskItem.completedToDo == true
+//
+//            todoCheckbox.setOnCheckedChangeListener(null)
+//            todoCheckbox.setOnCheckedChangeListener { _, isChecked ->
+//                currentTodo?.let {
+//                    onTodoCheckboxChanged(it.id, isChecked)
+//                }
+//            }
         }
     }
 
@@ -189,6 +241,7 @@ class TodayAdapter(
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.INVISIBLE
             scheduleSubCard.visibility=View.VISIBLE
+
         }
     }
 }

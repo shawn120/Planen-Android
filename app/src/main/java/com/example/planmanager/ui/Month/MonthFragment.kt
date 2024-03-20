@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
@@ -17,6 +18,7 @@ import com.example.planmanager.databinding.FragmentMonthBinding
 import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.ui.Today.TodayAdapter
+import com.google.android.material.snackbar.Snackbar
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,7 +29,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val adapter = TodayAdapter(::onTaskCardClick)
+    private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
 
@@ -49,7 +51,6 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
         taskListRV.layoutManager = LinearLayoutManager(requireContext())
         taskListRV.setHasFixedSize(true)
         taskListRV.adapter = adapter
-
 
         setupCalendar()
 
@@ -101,11 +102,52 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
                 taskListRV.scrollToPosition(0)
             }
         }
+
+        val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.absoluteAdapterPosition // int
+                val deletedItem = adapter.deleteTask(position)
+                val rootView = view?.findViewById<View>(R.id.rv_task_list_on_day)
+                val snackbar = rootView?.let {
+                    Snackbar.make(
+                        it,
+                        "Delete \"${deletedItem.title}\" ?",
+                        Snackbar.LENGTH_SHORT
+                    )
+                }
+                snackbar?.setAction("Confirm") {
+                    viewModel.deleteTask(deletedItem)
+                }
+                snackbar?.addCallback(object : Snackbar.Callback() {
+                    override fun onShown(sb: Snackbar?) {
+                        adapter.addTaskBackToListOnly(deletedItem, position)
+                    }
+                })
+                snackbar?.show()
+            }
+        }
+
+        ItemTouchHelper(itemTouchCallback).attachToRecyclerView(taskListRV)
     }
     private fun onTaskCardClick(task: TaskItem) {
         Log.d("TODAYFRAGMENT", "${task.title} is being clicked")
 // input id into this dialog
         val dialog = AddPlanDialog()
         dialog.show(requireFragmentManager(), "add_plan_dialog")
+    }
+    private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
+        Log.d("CHECKBOXCHANGE","month checkbox change-- $taskId")
+        viewModel.updateTodoCompletion(taskId, isChecked)
     }
 }

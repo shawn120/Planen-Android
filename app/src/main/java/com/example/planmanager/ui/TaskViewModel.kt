@@ -42,9 +42,9 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         getApplication<Application>().getString(R.string.pref_range_default_value)
     )
 
-    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
-        range?:"+0 day"
-    ).asLiveData()
+//    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
+//        range?:"+0 day"
+//    ).asLiveData()
 
 //    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
 //        "+0 day"
@@ -57,7 +57,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
     private val _apiResult = MutableLiveData<MutableList<HolidayItem>?>(null)
     val apiResult: LiveData<MutableList<HolidayItem>?> = _apiResult
 
-
+    fun getListWithRange(range: String): LiveData<MutableList<TaskItem>?>{
+        val taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(range).asLiveData()
+        return taskItemLocalsTodayWithRange
+    }
 
     fun updateHoliday(holidays: MutableList<HolidayItem>) {
         for (holiday in holidays) {

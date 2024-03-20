@@ -11,6 +11,8 @@ class TaskItemLocalRepository(
 
     suspend fun getLocalTaskItem(taskId: String) = dao.getLocalTaskItem(taskId)
 
+    suspend fun getLocalTaskItemByName(taskName: String) = dao.getLocalTaskItemByName(taskName)
+
     fun getAllLocalTaskItem() = dao.getAllLocalTasks()
 
     fun getAllLocalTaskItemToday() = dao.getAllLocalTasksToday()

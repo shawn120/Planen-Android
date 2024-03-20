@@ -34,9 +34,28 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
     private val _apiError = MutableLiveData<Throwable?>(null)
     val apiError : LiveData<Throwable?> = _apiError
 
-    private val _apiResult = MutableLiveData<List<HolidayItem>?>(null)
-    val apiResult: LiveData<List<HolidayItem>?> = _apiResult
+    private val _apiResult = MutableLiveData<MutableList<HolidayItem>?>(null)
+    val apiResult: LiveData<MutableList<HolidayItem>?> = _apiResult
 
+    fun updateHoliday(holidays: MutableList<HolidayItem>) {
+        for (holiday in holidays) {
+            val holidayName = holiday.name
+            Log.d("getTASK", "$holidayName")
+            viewModelScope.launch {
+                val taskItem = repository.getLocalTaskItemByName(holidayName)
+                Log.d("getTASK", "$taskItem")
+                if (taskItem == null){
+                    loadSchedule(
+                        holiday.name,
+                        "Holiday",
+                        holiday.date,
+                        ""
+                    )
+                }
+            }
+        }
+
+    }
     fun updateTodoCompletion(taskId: String, completed: Boolean) {
         viewModelScope.launch {
             val taskItem = repository.getLocalTaskItem(taskId)
@@ -70,7 +89,7 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
         viewModelScope.launch{
             val result = holidayRepository.loadHoliday(year, countryCode)
             _apiError.value = result.exceptionOrNull()
-            _apiResult.value = result.getOrNull()
+            _apiResult.value = result.getOrNull()?.toMutableList()
             Log.d("APIinViewModel", "${_apiError.value}")
             Log.d("APIinViewModel", "${_apiResult.value}")
         }

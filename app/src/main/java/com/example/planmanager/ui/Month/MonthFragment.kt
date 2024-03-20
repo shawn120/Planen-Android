@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +19,6 @@ import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.ui.Today.TodayAdapter
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -133,7 +131,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
                 }
                 snackbar?.addCallback(object : Snackbar.Callback() {
                     override fun onShown(sb: Snackbar?) {
-                        adapter.addTask(deletedItem, position)
+                        adapter.addTaskBackToListOnly(deletedItem, position)
                     }
                 })
                 snackbar?.show()

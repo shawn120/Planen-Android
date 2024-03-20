@@ -8,13 +8,10 @@ import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.planmanager.R
 import com.example.planmanager.data.TaskItem
-import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
-import com.google.android.material.snackbar.Snackbar
 import java.util.Date
 
 class TodayAdapter(
@@ -39,7 +36,7 @@ class TodayAdapter(
         notifyItemRangeInserted(0, tasks.size)
     }
 
-    fun addTask(newTask: TaskItem, position: Int = 0) {
+    fun addTaskBackToListOnly(newTask: TaskItem, position: Int = 0) {
         tasks.add(position, newTask)
         notifyItemInserted(position)
     }

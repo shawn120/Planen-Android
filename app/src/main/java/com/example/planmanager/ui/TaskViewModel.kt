@@ -1,6 +1,7 @@
 package com.example.planmanager.ui
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.text.TextUtils
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -16,8 +17,12 @@ import com.example.planmanager.data.HolidayService
 import com.example.planmanager.data.TaskItemLocalRepository
 import com.example.planmanager.util.TaskType
 import kotlinx.coroutines.launch
+import androidx.preference.PreferenceManager
+import com.example.planmanager.R
 
 class TaskViewModel(application: Application) : AndroidViewModel(application){
+
+    private var prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
     private var _taskItems = MutableLiveData<MutableList<TaskItem>?>(null)
     val taskItems: LiveData<MutableList<TaskItem>?> = _taskItems
@@ -32,13 +37,27 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     var taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
-    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange("+1 day").asLiveData()
+    var range = prefs.getString(
+        getApplication<Application>().getString(R.string.pref_range_key),
+        getApplication<Application>().getString(R.string.pref_range_default_value)
+    )
+
+    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
+        range?:"+0 day"
+    ).asLiveData()
+
+//    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange(
+//        "+0 day"
+//    ).asLiveData()
+
 
     private val _apiError = MutableLiveData<Throwable?>(null)
     val apiError : LiveData<Throwable?> = _apiError
 
     private val _apiResult = MutableLiveData<MutableList<HolidayItem>?>(null)
     val apiResult: LiveData<MutableList<HolidayItem>?> = _apiResult
+
+
 
     fun updateHoliday(holidays: MutableList<HolidayItem>) {
         for (holiday in holidays) {

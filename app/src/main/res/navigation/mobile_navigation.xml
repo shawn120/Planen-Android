@@ -23,4 +23,13 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
+    <fragment
+        android:id="@+id/navigation_user_pref"
+        android:label="@string/title_user_pref"
+        android:name="com.example.planmanager.ui.UserPref.PrefFragment" />
+
+    <action
+        android:id="@+id/navigate_to_user_pref"
+        app:destination="@id/navigation_user_pref" />
+
 </navigation>

@@ -21,7 +21,6 @@ import com.example.planmanager.ui.AddPlan.AddPlanDialog
 import com.example.planmanager.ui.TaskViewModel
 import com.example.planmanager.util.TaskType
 import com.google.android.material.snackbar.Snackbar
-import java.util.UUID
 
 class TodayFragment : Fragment(R.layout.fragment_today){
     private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged )
@@ -95,7 +94,7 @@ class TodayFragment : Fragment(R.layout.fragment_today){
         menuHost.addMenuProvider(
             object : MenuProvider {
                 override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                    menuInflater.inflate(R.menu.activity_main_menu, menu)
+                    menuInflater.inflate(R.menu.share_menu, menu)
                 }
 
                 override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

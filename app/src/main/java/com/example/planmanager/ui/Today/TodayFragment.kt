@@ -130,7 +130,7 @@ class TodayFragment : Fragment(R.layout.fragment_today){
     }
 
     fun shareTask() {
-        val taskItems = viewModel.taskItemLocalsToday.value
+        val taskItems = viewModel.taskItemLocalsTodayWithRange.value
         if (taskItems != null && taskItems.isNotEmpty()) {
             val shareText = StringBuilder()
             shareText.append("My Tasks for Today's Highlight:\n")

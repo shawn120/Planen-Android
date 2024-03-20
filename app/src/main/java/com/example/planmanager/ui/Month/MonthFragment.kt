@@ -32,7 +32,7 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
     private val adapter = TodayAdapter(::onTaskCardClick,::onTodoCheckboxChanged)
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskListRV: RecyclerView
-    private var selectedDate: Date? = null
+    private var selectedDate: Date? = Calendar.getInstance().time
 
     override fun onCreateView(
         inflater: LayoutInflater,

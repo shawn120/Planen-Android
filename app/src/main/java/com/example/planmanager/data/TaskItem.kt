@@ -53,7 +53,19 @@ data class TaskItem(
 
     @Ignore
     fun updateCurrentDate(date: Date?) {
-        currentUpdateDate = date
+//        currentUpdateDate = date
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+
+        // 清除时间部分
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+        // 设置为当前日期
+        currentUpdateDate = calendar.time
+
         Log.d("deadlineselect", "updateCurrentDate : $currentUpdateDate")
     }
 
@@ -66,20 +78,25 @@ data class TaskItem(
             val totalDuration = deadlineDateParsed.time - startDateParsed.time
 
             val passedDuration = currentDate?.time?.minus(startDateParsed.time)
-
-            var percentage = passedDuration?.toFloat()?.div(totalDuration.toFloat())
+        Log.d("deadlineselect", "passedDuration :: $passedDuration")
+            var percentage = (passedDuration?.toFloat()?.div(totalDuration.toFloat()))
+        Log.d("deadlineselect", "percentage :: $percentage")
         if (percentage != null) {
             if (percentage < 0) {
                 percentage = 0F
             }
-        }
-        if (percentage != null) {
             if (percentage > 1) {
                 percentage = 1F
             }
         }
-            (String.format("%.2f", percentage).toFloat()*100).toInt()
+        if(startDateParsed == currentDate){
+            percentage = 0F
+        }else if(deadlineDateParsed == currentDate){
+            percentage = 1F
         }
+
+            (String.format("%.2f", percentage).toFloat()*100).toInt()
+    }
 
     val taskType: TaskType
         get() {

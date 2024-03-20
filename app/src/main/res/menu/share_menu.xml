@@ -9,5 +9,10 @@
         android:icon="@drawable/baseline_share_24"
         android:title="@string/action_share"
         app:showAsAction="ifRoom" />
+<!--    <item-->
+<!--        android:id="@+id/action_pref"-->
+<!--        android:icon="@drawable/baseline_settings_24"-->
+<!--        android:title="@string/title_user_pref"-->
+<!--        app:showAsAction="ifRoom" />-->
 
 </menu>

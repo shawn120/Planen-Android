@@ -2,11 +2,18 @@ package com.example.planmanager
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -46,6 +53,28 @@ class MainActivity : AppCompatActivity() {
             val dialog = AddPlanDialog()
             dialog.show(supportFragmentManager, "add_plan_dialog")
         }
+
+        addMenuProvider(
+            object : MenuProvider {
+                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                    menuInflater.inflate(R.menu.setting_menu, menu)
+                }
+
+                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                    return when (menuItem.itemId) {
+
+                        R.id.action_pref -> {
+                            findNavController(R.id.nav_host_fragment_activity_main).navigate(R.id.navigate_to_user_pref)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+            },
+            this,
+            Lifecycle.State.STARTED
+        )
+
     }
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

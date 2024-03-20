@@ -125,7 +125,7 @@ class GetEventFragment : Fragment() {
         mService = Calendar.Builder(
             transport, jsonFactory, credential
         )
-            .setApplicationName("Plan Manager")
+            .setApplicationName("Planen")
             .build()
     }
 

@@ -3,12 +3,19 @@ package com.example.planmanager.ui.Month
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -147,6 +154,28 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
                 snackbar?.show()
             }
         }
+
+//        val menuHost: MenuHost = requireActivity()
+//        menuHost.addMenuProvider(
+//            object : MenuProvider {
+//                override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+//                    menuInflater.inflate(R.menu.setting_menu, menu)
+//                }
+//
+//                override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+//                    return when (menuItem.itemId) {
+//
+//                        R.id.action_pref -> {
+//                            findNavController().navigate(R.id.navigate_to_user_pref)
+//                            true
+//                        }
+//                        else -> false
+//                    }
+//                }
+//            },
+//            viewLifecycleOwner,
+//            Lifecycle.State.STARTED
+//        )
 
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(taskListRV)
     }

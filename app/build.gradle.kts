@@ -106,6 +106,9 @@ dependencies {
     //easily control permissions
     implementation ("pub.devrel:easypermissions:3.0.0")
 
+    //pref
+    implementation("androidx.preference:preference-ktx:1.2.1")
+
     implementation("androidx.compose.runtime:runtime:1.6.3")
     implementation("androidx.compose.runtime:runtime-livedata:1.6.3")
     implementation("androidx.compose.runtime:runtime-rxjava2:1.6.3")

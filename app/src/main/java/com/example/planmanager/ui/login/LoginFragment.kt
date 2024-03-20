@@ -19,10 +19,6 @@ import com.google.android.material.button.MaterialButton
 import com.example.planmanager.ui.Profile.ProfileFragment
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
-    private lateinit var gso: GoogleSignInOptions
-    private lateinit var gsc: GoogleSignInClient
-    private lateinit var googleBtn: ImageView
-    private lateinit var clientId: String // Declare clientId property
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,25 +27,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_login, container, false)
 
-        clientId = getString(R.string.andriod_client) // Initialize clientId here
-
-        googleBtn = view.findViewById(R.id.google_btn)
-
-        gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(clientId) // Use the client ID here
-            .requestEmail()
-            .build()
-
-        gsc = GoogleSignIn.getClient(requireContext(), gso)
 
 
         val acct = GoogleSignIn.getLastSignedInAccount(requireContext())
         if (acct != null) {
             navigateToProfileFragment()
-        }
-
-        googleBtn.setOnClickListener {
-            signIn()
         }
 
         val username: TextView = view.findViewById(R.id.username)
@@ -70,30 +52,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         return view
     }
 
-    private fun signIn() {
-        val signInIntent = gsc.signInIntent
-        startActivityForResult(signInIntent, RC_SIGN_IN)
-    }
-
     private fun navigateToProfileFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
         findNavController().navigate(action)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RC_SIGN_IN) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                task.getResult(ApiException::class.java)
-                navigateToProfileFragment()
-            } catch (e: ApiException) {
-                Toast.makeText(requireContext().applicationContext, "Something went wrong", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
-    companion object {
-        private const val RC_SIGN_IN = 1000
-    }
 }

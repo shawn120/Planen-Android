@@ -32,6 +32,8 @@ class TaskViewModel(application: Application) : AndroidViewModel(application){
 
     var taskItemLocalsToday = repository.getAllLocalTaskItemToday().asLiveData()
 
+    var taskItemLocalsTodayWithRange = repository.getAllLocalTaskItemTodayWithRange("+1 day").asLiveData()
+
     private val _apiError = MutableLiveData<Throwable?>(null)
     val apiError : LiveData<Throwable?> = _apiError
 

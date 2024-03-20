@@ -17,5 +17,7 @@ class TaskItemLocalRepository(
 
     fun getAllLocalTaskItemToday() = dao.getAllLocalTasksToday()
 
+    fun getAllLocalTaskItemTodayWithRange(rangeString: String) = dao.getAllLocalTasksTodayWithRange(rangeString)
+
     fun getAllLocalTaskItemOnDay(date: String) = dao.getAllLocalTasksOnDate(date)
 }

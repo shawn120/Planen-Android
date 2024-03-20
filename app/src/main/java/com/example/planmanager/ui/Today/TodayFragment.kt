@@ -36,7 +36,7 @@ class TodayFragment : Fragment(R.layout.fragment_today){
         taskListRV.setHasFixedSize(true)
         taskListRV.adapter = adapter
 
-        viewModel.taskItemLocalsToday.observe(viewLifecycleOwner) {taskItemLocalsList ->
+        viewModel.taskItemLocalsTodayWithRange.observe(viewLifecycleOwner) {taskItemLocalsList ->
             Log.d("Today Fragment", "today fragment new item: {$taskItemLocalsList}")
             adapter.updateTasks(taskItemLocalsList)
             taskListRV.scrollToPosition(0)

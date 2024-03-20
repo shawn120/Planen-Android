@@ -211,7 +211,6 @@ class AddPlanDialog : DialogFragment() {
             val scheduleLocation = scheduleLocation.text.toString().trim()
             val scheduleDate = scheduleSelectDateEdit.text.toString().trim().substringAfter(":").trim()
             val scheduleTime = scheduleSelectTimeEdit.text.toString().trim().substringAfter(":").trim()
-
             if (scheduleName.isNotEmpty()) {
 //                if(todayFragment != null){
                     viewModel.loadSchedule(
@@ -258,7 +257,12 @@ class AddPlanDialog : DialogFragment() {
                 .build()
 
             timePicker.addOnPositiveButtonClickListener {
-                val selectedTime = "Time : ${timePicker.hour}:${timePicker.minute}"
+                val selectedTime: String
+                if(timePicker.minute < 10){
+                    selectedTime = "Time : ${timePicker.hour}:0${timePicker.minute}"
+                }else{
+                    selectedTime = "Time : ${timePicker.hour}:${timePicker.minute}"
+                }
                 scheduleSelectTimeEdit.setText(selectedTime)
             }
 

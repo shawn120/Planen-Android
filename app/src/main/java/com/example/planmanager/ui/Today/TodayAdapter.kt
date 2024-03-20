@@ -32,6 +32,10 @@ class TodayAdapter(
         private const val VIEW_TYPE_SCHEDULE = 2
     }
 
+
+    fun clearTasks(){
+        tasks.clear()
+    }
     fun updateTasks(newTasks: MutableList<TaskItem>?) {
         notifyItemRangeRemoved(0, tasks.size)
         tasks = newTasks?: mutableListOf()
@@ -98,6 +102,7 @@ class TodayAdapter(
                 if (taskItem.taskType == TaskType.DEADLINE) {
                     holder.bindDeadline(taskItem, currentDate)
                 }
+
             }
             is TodoViewHolder -> {
                 if (taskItem.taskType == TaskType.TODO) {
@@ -185,7 +190,28 @@ class TodayAdapter(
             deadlineSubCard.visibility=View.INVISIBLE
             todoSubCard.visibility=View.VISIBLE
             scheduleSubCard.visibility=View.INVISIBLE
+
+            todoCheckbox.setOnCheckedChangeListener(null)
+
             todoCheckbox.isChecked = taskItem.completedToDo == true
+            todoCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                currentTodo?.completedToDo = isChecked
+
+                if (currentTodo != null) {
+                    val taskId = currentTodo?.id
+                    taskId?.let {
+                        onTodoCheckboxChanged(it, isChecked)
+                    }
+                }
+            }
+//            todoCheckbox.isChecked = taskItem.completedToDo == true
+//
+//            todoCheckbox.setOnCheckedChangeListener(null)
+//            todoCheckbox.setOnCheckedChangeListener { _, isChecked ->
+//                currentTodo?.let {
+//                    onTodoCheckboxChanged(it.id, isChecked)
+//                }
+//            }
         }
     }
 

@@ -95,11 +95,10 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
             val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val formattedDate = dateFormat.format(selectedDate.time)
 
-
             textView.text = formattedDate
             val list = viewModel.getTaskOnDay(date = formattedDate)
             list.observe(viewLifecycleOwner) {taskItemLocalsList ->
-                Log.d("LookAtHere", "today fragment new item: {$taskItemLocalsList}")
+                Log.d("LookAtHere", "month fragment new item: {$taskItemLocalsList}")
                 adapter.updateTasks(taskItemLocalsList)
                 taskListRV.scrollToPosition(0)
             }
@@ -150,6 +149,10 @@ class MonthFragment : Fragment(R.layout.fragment_month) {
     }
     private fun onTodoCheckboxChanged(taskId: String, isChecked: Boolean) {
         Log.d("CHECKBOXCHANGE","month checkbox change-- $taskId")
+
         viewModel.updateTodoCompletion(taskId, isChecked)
+
+//        viewModel.updateTask(task = )
     }
+
 }

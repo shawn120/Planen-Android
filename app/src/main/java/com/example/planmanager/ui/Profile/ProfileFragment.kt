@@ -30,6 +30,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 
 
@@ -39,14 +40,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var mGoogleSignInClient: GoogleSignInClient? = null
     private var binding: FragmentProfileBinding? = null
     private var _binding: FragmentProfileBinding? = null
+    private val profileViewModel:ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val profileViewModel =
-            ViewModelProvider(this).get(ProfileViewModel::class.java)
+
 
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_profile, container, false
@@ -81,6 +82,17 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 signInLauncher.launch(it)
             }
         }
+        // observe user data (cache) and load
+        profileViewModel.userData.observe(viewLifecycleOwner) { userData ->
+            userData?.let {
+                binding?.apply {
+                    nameTextView.text = it.name
+                    emailTextView.text = it.email
+                    Glide.with(requireContext()).load(it.photoUrl).into(profileImageView)
+                    singInWithGoogle.text = "Sign in with another account"
+                }
+            }
+        }
     }
 
     private val signInLauncher: ActivityResultLauncher<Intent> =
@@ -103,15 +115,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             val authCode = account.serverAuthCode
             Log.w("klnflkadsnflaks", "authCode=" + authCode)
             getRefreshToken(authCode)
-            binding?.apply {
-                nameTextView.text = account.displayName.toString()
-                emailTextView.text = account.email.toString()
-            }
-            binding?.profileImageView?.let { image ->
-                Glide.with(requireContext())
-                    .load(account.photoUrl.toString())
-                    .into(image)
-            }
+            // update to viewmodel, save it as a data (cache)
+            profileViewModel.updateUserData(account.displayName.toString(), account.email.toString(), account.photoUrl.toString())
         } catch (e: ApiException) {
             Log.w("klnflkadsnflaks", "signInResult:failed code=" + e.statusCode)
         }
@@ -148,7 +153,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     )
                     Toast.makeText(
                         requireContext(),
-                        tokenResponse?.scope.toString(),
+                        "Sign in successfully!",
                         Toast.LENGTH_SHORT
                     ).show()
                     Log.w("klnflkadsnflaks", "tokenResponse=" + tokenResponse?.scope.toString())

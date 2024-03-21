@@ -4,9 +4,9 @@ A multi-functional, Swiss-Army-knife style, plan manager app developed with Kotl
 
 Planen covers three major kinds of plan types: to-do, deadline, and schedule all in one place.
 
-> Planen\
+> Planen - German\
 > [ˈplaːnən]\
-> To plan, to schedule in German
+> _Verb._ To plan, to schedule.
 
 ## Feature highlights
 

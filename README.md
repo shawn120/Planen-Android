@@ -1,4 +1,4 @@
-# Planene
+# Planen
 
 A multi-functional, Swiss-Army-knife style, plan manager
 

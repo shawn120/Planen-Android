@@ -8,7 +8,14 @@ Planen covers three major kinds of plan types: to-do, deadline, and schedule all
 > [ˈplaːnən]\
 > _Verb._ To plan, to schedule.
 
-## Feature highlights
+## Posters
+
+![Poster 1](Posters/1.png "1")
+![Poster 2](Posters/2.png "2")
+![Poster 3](Posters/3.png "3")
+![Poster 4](Posters/4.png "4")
+
+## Feature Lists
 
 - Take three kinds of task type
 - Deadline type can show progress according to the position of today between start day and the due day

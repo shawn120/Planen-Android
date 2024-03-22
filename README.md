@@ -8,6 +8,11 @@ Planen covers three major kinds of plan types: to-do, deadline, and schedule all
 > [ˈplaːnən]\
 > _Verb._ To plan, to schedule.
 
+# Table of Contents
+- [Posters](#posters)
+- [Feature Lists](#feature-lists)
+- [Future features/todos](#future-featurestodos)
+
 ## Posters
 
 ![Poster 1](Posters/1.png "1")
@@ -30,5 +35,9 @@ Planen covers three major kinds of plan types: to-do, deadline, and schedule all
 
 ## Future features/todos
 
-- Clean codes and fix bugs
-- Save user's tasks into their own database/google calendar
+[Full future features checklist](https://github.com/shawn120/Planen-Android/issues/1)
+
+First priority:
+- Clean codes
+- Fix month view display bug. The refreshing error will jump to the last cached day
+- Try to make the TaskItem back to "type nesting" instead of "type overlapping"
